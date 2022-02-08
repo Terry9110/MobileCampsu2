@@ -42,6 +42,7 @@ dependencies:
   cloud_functions: ^3.2.6
   provider: ^6.0.2
   flutter_multi_formatter: ^2.5.1
+  pin_code_fields: ^7.3.0
 
 dev_dependencies:
   flutter_test:
