@@ -1,4 +1,5 @@
 import 'package:campus2/Auth/components/EnterOTP/phone_auth.dart';
+import 'package:campus2/Auth/components/EnterOTP/phone_login.dart';
 import 'package:campus2/Auth/components/action_button.dart';
 import 'package:campus2/SignupScreen/signup_screen.dart';
 import 'package:flutter/material.dart';
@@ -61,7 +62,7 @@ class SignUpMethod extends StatelessWidget {
                        SizedBox(height: 15),
                        InkWell(
                          onTap: (){
-                                                                 Navigator.of(context).push(MaterialPageRoute(builder: (context) => EnterOTP()));
+                                                                 Navigator.of(context).push(MaterialPageRoute(builder: (context) => PhoneSignUpScreen()));
 
                          },
                          child: Container(
