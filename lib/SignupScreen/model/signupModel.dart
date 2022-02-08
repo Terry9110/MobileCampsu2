@@ -1,3 +1,5 @@
+// import 'dart:js';
+
 import 'package:campus2/SignupSuccessful/success_screen.dart';
 import 'package:campus2/globalNav/index.dart';
 import 'package:flutter/material.dart';
@@ -93,8 +95,13 @@ class SignupModel extends ChangeNotifier {
         setErrorMessage(result.data["message"]);
         return;
       }
+      // Navigator.of(context).push(MaterialPageRoute(builder: (context) => SignupPage()));
+
+
       globalNav.navigatorKey.currentState!
           .push(MaterialPageRoute(builder: (context) => SignupSuccess()));
+      // print('this is global nav');
+      // print(globalNav.navigatorKey.currentState);
     } catch (e) {
       print(e);
       setErrorMessage(e.toString());

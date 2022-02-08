@@ -27,7 +27,6 @@ class _SignupPageState extends State<SignupPage> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     final provider = Provider.of<SignupModel>(context);
-  
 
     return Scaffold(
         // ignore: avoid_unnecessary_containers
@@ -106,7 +105,7 @@ class _SignupPageState extends State<SignupPage> {
             inputType: TextInputType.phone,
             hintText: "Phone",
             label: "Phone",
-            // formatterList: [PhoneInputFormatter()],
+            formatterList: [PhoneInputFormatter()],
           ),
           genderPicker(context),
           const SizedBox(height: 15),
@@ -125,12 +124,12 @@ class _SignupPageState extends State<SignupPage> {
           Visibility(
               visible: provider.isLoading,
               child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: const [
-              CircularProgressIndicator(),
-            ],
-          )),
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: const [
+                  CircularProgressIndicator(),
+                ],
+              )),
           Visibility(
             visible: provider.errMesssage != null,
             child: Row(
@@ -151,7 +150,7 @@ class _SignupPageState extends State<SignupPage> {
               child: InkWell(
                   onTap: () {
                     provider.signup();
-                    //Navigator.pushNamed(context, "/signupSuccesful");
+                    // Navigator.pushNamed(context, "/signupSuccesful");
                   },
                   child: const ActionButton(buttonName: "Sign Up"))),
           const SizedBox(height: 15),
@@ -178,17 +177,7 @@ class _SignupPageState extends State<SignupPage> {
                           fontWeight: FontWeight.w600)))
             ],
           ),
-          //   const BottomText(
-          //   startText: "I'm already a member !",
-          //   actionText: "Login",
-          //   routeName: "/login",
-          // ),
           const SizedBox(height: 20),
-          //    const BottomText(
-          //   startText: "I'm already a member !",
-          //   actionText: "Phone Authentication",
-          //   routeName: "/login",
-          // ),
         ],
       ),
     ));
@@ -196,7 +185,6 @@ class _SignupPageState extends State<SignupPage> {
 }
 
 Widget genderPicker(BuildContext context) {
-
   final provider = Provider.of<SignupModel>(context);
   return Column(
     mainAxisAlignment: MainAxisAlignment.start,

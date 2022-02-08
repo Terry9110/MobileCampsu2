@@ -30,10 +30,10 @@ class SignUpMethod extends StatelessWidget {
                 style:
                     GoogleFonts.poppins(color: Colors.grey[500], fontSize: 18)),
                      const SizedBox(height: 30),
-                    // Container(
-                    //        child: const ActionButton(
-                    //   buttonName: "Login",
-                    // )),
+                    Container(
+                           child: const ActionButton(
+                      buttonName: "Login",
+                    )),
                                 const SizedBox(height: 130),
 
                     InkWell(

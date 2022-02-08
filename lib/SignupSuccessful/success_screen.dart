@@ -1,3 +1,4 @@
+import 'package:campus2/LoginScreen/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -45,7 +46,8 @@ class _SignupSuccess extends State<SignupSuccess> {
                           child: Center(
                               child: InkWell(
                                   onTap: () {
-                                    Navigator.pushNamed(context, "/login");
+                                   Navigator.of(context).push(MaterialPageRoute(builder: (context) => LoginPage()));
+
                                   },
                                   child: Text("Done",
                                       style: GoogleFonts.poppins(
@@ -108,7 +110,7 @@ class _SignupSuccess extends State<SignupSuccess> {
                                 left: 20, right: 20, top: 10, bottom: 10),
                             child: InkWell(
                                 onTap: () {
-                                  Navigator.pushNamed(context, "/login");
+                                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => LoginPage()));
                                 },
                                 child: loginButton()),
                           ))

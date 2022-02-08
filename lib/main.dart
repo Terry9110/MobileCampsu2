@@ -1,5 +1,7 @@
 import 'package:campus2/LoginScreen/login_page.dart';
 import 'package:campus2/SignupScreen/signup_screen.dart';
+import 'package:campus2/SignupSuccessful/success_screen.dart';
+import 'package:campus2/globalNav/index.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -25,11 +27,12 @@ class MyApp extends StatelessWidget {
     ],
     child:   MaterialApp(
       debugShowCheckedModeBanner: false,
+      navigatorKey: globalNav.navigatorKey,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const SignupPage(),
+      home: SignupSuccess(),
       // home: const MyHomePage(title: 'Flutter Demo Home Page'),
     )
     );
