@@ -1,3 +1,4 @@
+import 'package:campus2/Auth/components/EnterOTP/phone_auth.dart';
 import 'package:campus2/Auth/components/action_button.dart';
 import 'package:campus2/SignupScreen/signup_screen.dart';
 import 'package:flutter/material.dart';
@@ -58,21 +59,27 @@ class SignUpMethod extends StatelessWidget {
                       fontSize: 14)))),
                     ),
                        SizedBox(height: 15),
-                       Container(
-        height: 50,
-        width: width,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            gradient: LinearGradient(colors: [
-              const Color(0xFF006633),
-              const Color(0xFF006633).withOpacity(0.8),
-            ])),
-        child: Center(
-            child: Text('Sign Up With Phone Number',
-                style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white,
-                    fontSize: 14))))
+                       InkWell(
+                         onTap: (){
+                                                                 Navigator.of(context).push(MaterialPageRoute(builder: (context) => EnterOTP()));
+
+                         },
+                         child: Container(
+                               height: 50,
+                               width: width,
+                               decoration: BoxDecoration(
+                                   borderRadius: BorderRadius.circular(15),
+                                   gradient: LinearGradient(colors: [
+                                     const Color(0xFF006633),
+                                     const Color(0xFF006633).withOpacity(0.8),
+                                   ])),
+                               child: Center(
+                                   child: Text('Sign Up With Phone Number',
+                                       style: GoogleFonts.poppins(
+                                           fontWeight: FontWeight.w600,
+                                           color: Colors.white,
+                                           fontSize: 14)))),
+                       )
                     
         ],
         
