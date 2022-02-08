@@ -20,6 +20,29 @@ class PhoneSignUpScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const SizedBox(height: 40),
+          Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Icon(Icons.arrow_back,
+                                color: Colors.black)),
+                        // Expanded(
+                        //     child: Center(
+                        //   child: Text("Verify Phone",
+                        //       style: GoogleFonts.poppins(
+                        //         color: Colors.black,
+                        //         fontSize: 14,
+                        //         fontWeight: FontWeight.w600,
+                        //       )),
+                        // )),
+                      ],
+                    ),
+         
            const SizedBox(height: 40),
              Text("Phone Authentication,",
                 style: GoogleFonts.poppins(
