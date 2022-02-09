@@ -32,22 +32,35 @@ class LoginPage extends StatelessWidget {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        prefixIcon: const Icon(Icons.mail),
-        // contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: "Email",
-        hintStyle: GoogleFonts.poppins(color: Colors.grey[400]),
-        contentPadding:
-            const EdgeInsets.only(left: 20, top: 15, bottom: 15, right: 5),
-        label:  Text('Email',
-        style: GoogleFonts.poppins(color: Colors.grey[500], fontSize: 12),
-        ),
-      ),
+          prefixIcon: const Icon(Icons.mail),
+          // contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+          hintText: "Email",
+          hintStyle: GoogleFonts.poppins(color: Colors.grey[400]),
+          contentPadding:
+              const EdgeInsets.only(left: 20, top: 15, bottom: 15, right: 5),
+          label: Text(
+            'Email',
+            style: GoogleFonts.poppins(color: Colors.grey[500], fontSize: 12),
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15),
+            borderSide: const BorderSide(width: 1, color: Colors.grey),
+          ),
+          focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: const BorderSide(width: 1, color: Color(0xFFe63900))),
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide:
+                  const BorderSide(width: 1, color: Color(0xFFe63900)))),
     );
 
     //password field
     final passwordField = TextFormField(
       autofocus: false,
       controller: passwordController,
+      //allows you to hide password
+      obscureText: true,
       //  validator: (value) {
 
       //  },
@@ -56,16 +69,125 @@ class LoginPage extends StatelessWidget {
         passwordController.text = value!;
       },
       textInputAction: TextInputAction.done,
+      decoration: InputDecoration(
+          prefixIcon: const Icon(Icons.vpn_key),
+          // contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+          hintText: "Password",
+          hintStyle: GoogleFonts.poppins(color: Colors.grey[400]),
+          contentPadding:
+              const EdgeInsets.only(left: 20, top: 15, bottom: 15, right: 5),
+          label: Text(
+            'Password',
+            style: GoogleFonts.poppins(color: Colors.grey[500], fontSize: 12),
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15),
+            borderSide: const BorderSide(width: 1, color: Colors.grey),
+          ),
+          focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: const BorderSide(width: 1, color: Color(0xFFe63900))),
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide:
+                  const BorderSide(width: 1, color: Color(0xFFe63900)))),
     );
+
+    final loginButton = Material(
+      elevation: 5,
+      color: Color(0xFF006633),
+      borderRadius: BorderRadius.circular(15),
+
+      child: MaterialButton(
+        height: 50,
+        minWidth: MediaQuery.of(context).size.width,
+        onPressed: () {},
+        child: Text('Login',
+            style: GoogleFonts.poppins(
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
+                fontSize: 14)),
+      ),
+
+      // child: Container(
+
+      //   height: 50,
+      //   width: MediaQuery.of(context).size.width,
+      //   decoration: BoxDecoration(
+      //       borderRadius: BorderRadius.circular(15),
+      //       gradient: LinearGradient(colors: [
+      //         const Color(0xFF006633),
+      //         const Color(0xFF006633).withOpacity(0.8),
+      //       ])),
+      //   child: Center(
+      //       child: Text('Login',
+      //           style: GoogleFonts.poppins(
+      //               fontWeight: FontWeight.w600,
+      //               color: Colors.white,
+      //               fontSize: 14))))
+    );
+
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
           child: Container(
             color: Colors.white,
-            child: Form(
-              key: _formKey,
-              child: Column(
-                children: [emailField, passwordField],
+            child: Padding(
+              padding: const EdgeInsets.all(36.0),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(height: 40),
+                    Text("Welcome,",
+                        style: GoogleFonts.poppins(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 24)),
+                    Text("Sign in with email to continue!",
+                        style: GoogleFonts.poppins(
+                            color: Colors.grey[500], fontSize: 18)),
+                    const SizedBox(height: 60),
+                    emailField,
+                    const SizedBox(height: 20),
+                    passwordField,
+                    const SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        GestureDetector(
+                            onTap: () {},
+                            child: Text("Forgot Password ? ",
+                                style: GoogleFonts.poppins(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 12)))
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    loginButton,
+                    const SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("I'm a new user",
+                            style: GoogleFonts.poppins(
+                                color: Colors.black,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600)),
+                        const SizedBox(width: 5),
+                        GestureDetector(
+                            onTap: () {},
+                            child: Text("SignUp",
+                                style: GoogleFonts.poppins(
+                                    color: const Color(0xFF006633),
+                                    fontWeight: FontWeight.w600)))
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
           ),
@@ -73,121 +195,6 @@ class LoginPage extends StatelessWidget {
       ),
     );
 
-//     double height = MediaQuery.of(context).size.height;
-//     double width = MediaQuery.of(context).size.width;
-//     return Scaffold(
-//       body: Container(
-//         height: height,
-//         width: width,
-//         padding: const EdgeInsets.all(20),
-//         color: Colors.white,
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.start,
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             const SizedBox(height: 40),
-//             Text("Welcome,",
-//                 style: GoogleFonts.poppins(
-//                     color: Colors.black,
-//                     fontWeight: FontWeight.bold,
-//                     fontSize: 24)),
-//             const SizedBox(height: 0),
-//             Text("Sign in to continue!",
-//                 style:
-//                     GoogleFonts.poppins(color: Colors.grey[500], fontSize: 18)),
-//             const SizedBox(height: 60),
-//             AuthTextInput(
-//               inputType: TextInputType.emailAddress,
-//               label: "Email",
-//               hintText: "johndoe@gmail.com",
-//               // value: provider.email,
-//               onChanged: (txt) {
-//                 // provider.setEmail(txt);
-//               },
-//             ),
-//             const SizedBox(height: 20),
-//             AuthTextInput(
-//                 inputType: TextInputType.text,
-//                 label: "Password",
-//                 hintText: "*******",
-//                 // value: provider.password,
-//                 onChanged: (txt) {
-//                   // provider.setPassword(txt);
-//                 },
-//                 passwordInput: true),
-//             const SizedBox(height: 15),
-//             Row(
-//                 mainAxisAlignment: MainAxisAlignment.end,
-//                 crossAxisAlignment: CrossAxisAlignment.center,
-//                 children: [
-//                   Text("Forgot Password ? ",
-//                       style: GoogleFonts.poppins(
-//                           color: Colors.black,
-//                           fontWeight: FontWeight.w600,
-//                           fontSize: 12))
-//                 ]),
-//             const SizedBox(height: 30),
-//             // Visibility(
-//             //     // visible: provider.isLoading,
-//             //     child: Row(
-//             //       mainAxisAlignment: MainAxisAlignment.center,
-//             //       crossAxisAlignment: CrossAxisAlignment.center,
-//             //       children: const [
-//             //         CircularProgressIndicator(),
-//             //       ],
-//             //     )),
-//             //  Visibility(
-//             // visible: provider.errMessage != null,
-//             // child: Row(
-//             //   mainAxisAlignment: MainAxisAlignment.start,
-//             //   crossAxisAlignment: CrossAxisAlignment.start,
-//             //   children: [
-//             //     Text(provider.errMessage ?? "",
-//             //         style: GoogleFonts.poppins(
-//             //             color: Colors.red, fontSize: 14)),
-//             //   ],
-//             // )),
-//             //      Visibility(
-//             // visible:
-//             //     ((provider.isLoading) || (provider.errMessage != null)),
-//             // child: const SizedBox(height: 10)),
-//             Visibility(
-//                 // visible: (!provider.isLoading),
-//                 child: InkWell(
-//                     onTap: () {
-//                       // provider.login();
-//                     },
-//                     child: const ActionButton(
-//                       buttonName: "Login",
-//                     ))),
-//             const SizedBox(height: 15),
-//             const FaceBookSigninButton(buttonName: "Connect with Facebook"),
-//             Row(
-//               mainAxisAlignment: MainAxisAlignment.center,
-//               crossAxisAlignment: CrossAxisAlignment.center,
-//               children: [
-//                 Text("I'm a new user",
-//                     style: GoogleFonts.poppins(
-//                         color: Colors.black,
-//                         fontSize: 12,
-//                         fontWeight: FontWeight.w600)),
-//                 const SizedBox(width: 5),
-//                 InkWell(
-//                     onTap: () {
-//                       Navigator.of(context).push(MaterialPageRoute(
-//                           builder: (context) => SignUpMethod()));
-//                     },
-//                     child: Text("SignUp",
-//                         style: GoogleFonts.poppins(
-//                             color: const Color(0xFF006633),
-//                             fontWeight: FontWeight.w600)))
-//               ],
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
+
   }
 }
