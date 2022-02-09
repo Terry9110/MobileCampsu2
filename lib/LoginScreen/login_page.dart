@@ -179,8 +179,11 @@ class LoginPage extends StatelessWidget {
                                 fontWeight: FontWeight.w600)),
                         const SizedBox(width: 5),
                         GestureDetector(
-                            onTap: () {},
-                            child: Text("SignUp",
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => SignUpMethod()));
+                            },
+                            child: Text("Sign Up",
                                 style: GoogleFonts.poppins(
                                     color: const Color(0xFF006633),
                                     fontWeight: FontWeight.w600)))
@@ -194,7 +197,5 @@ class LoginPage extends StatelessWidget {
         ),
       ),
     );
-
-
   }
 }
