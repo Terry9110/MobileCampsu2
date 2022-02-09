@@ -1,3 +1,4 @@
+import 'package:campus2/LoginScreen/login_page.dart';
 import 'package:campus2/SignupScreen/Signup_method.dart';
 import 'package:campus2/SignupScreen/signup_screen.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +40,7 @@ class LoginMehod extends StatelessWidget {
 
                     InkWell(
                       onTap: () {
-                                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => SignupPage()));
+                                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => LoginPage()));
 
                       },
                       child: Container(
