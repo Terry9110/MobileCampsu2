@@ -224,7 +224,34 @@ class _SignupPageState extends State<SignupPage> {
                   const BorderSide(width: 1, color: Color(0xFFe63900)))),
     );
 
+    final signUpButton = Material(
+      elevation: 5,
+      color: Color(0xFF006633),
+      borderRadius: BorderRadius.circular(15),
+      child: MaterialButton(
+        height: 50,
+        minWidth: MediaQuery.of(context).size.width,
+        onPressed: () {},
+        child: Text('Sign Up',
+            style: GoogleFonts.poppins(
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
+                fontSize: 14)),
+      ),
+    );
     return Scaffold(
+      appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Color(0xFF006633),
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          )),
       body: Center(
         child: SingleChildScrollView(
           child: Container(
@@ -255,6 +282,7 @@ class _SignupPageState extends State<SignupPage> {
                     passwordField,
                     const SizedBox(height: 20),
                     phoneNumberField,
+                    genderPicker(context),
                     const SizedBox(height: 20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -269,10 +297,8 @@ class _SignupPageState extends State<SignupPage> {
                       ],
                     ),
                     const SizedBox(height: 20),
-                    // loginButton,
+                    signUpButton,
                     const SizedBox(height: 20),
-                   
-                  
                   ],
                 ),
               ),

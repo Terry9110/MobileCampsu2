@@ -97,7 +97,6 @@ class LoginPage extends StatelessWidget {
       elevation: 5,
       color: Color(0xFF006633),
       borderRadius: BorderRadius.circular(15),
-
       child: MaterialButton(
         height: 50,
         minWidth: MediaQuery.of(context).size.width,
@@ -108,26 +107,21 @@ class LoginPage extends StatelessWidget {
                 color: Colors.white,
                 fontSize: 14)),
       ),
-
-      // child: Container(
-
-      //   height: 50,
-      //   width: MediaQuery.of(context).size.width,
-      //   decoration: BoxDecoration(
-      //       borderRadius: BorderRadius.circular(15),
-      //       gradient: LinearGradient(colors: [
-      //         const Color(0xFF006633),
-      //         const Color(0xFF006633).withOpacity(0.8),
-      //       ])),
-      //   child: Center(
-      //       child: Text('Login',
-      //           style: GoogleFonts.poppins(
-      //               fontWeight: FontWeight.w600,
-      //               color: Colors.white,
-      //               fontSize: 14))))
     );
 
     return Scaffold(
+      appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Color(0xFF006633),
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          )),
       body: Center(
         child: SingleChildScrollView(
           child: Container(
