@@ -89,12 +89,12 @@ class PhoneSignUpScreen extends StatelessWidget {
             ),
             ElevatedButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => OTPScreen(phoneNumber.text),
-                    ),
-                  );
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     // builder: (context) => OTPScreen(phoneNumber.text),
+                  //   ),
+                  // );
                 },
                 child: Center(
                       child: Text('Get OTP 2.0',
