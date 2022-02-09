@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
     ],
     child:   MaterialApp(
       debugShowCheckedModeBanner: false,
-      navigatorKey: globalNav.navigatorKey,
+      // navigatorKey: globalNav.navigatorKey,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
