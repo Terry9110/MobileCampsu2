@@ -1,4 +1,6 @@
-import 'dart:js';
+// import 'dart:js';
+
+// import 'dart:js';
 
 import 'package:campus2/SignupScreen/model/user_model.dart';
 import 'package:campus2/SignupSuccessful/success_screen.dart';
@@ -253,7 +255,7 @@ class _SignupPageState extends State<SignupPage> {
         minWidth: MediaQuery.of(context).size.width,
         onPressed: () {
           signUp(emailEditingController.text, passwordEditingController.text,
-              );
+              context);
         },
         child: Text('Sign Up',
             style: GoogleFonts.poppins(
@@ -282,7 +284,7 @@ class _SignupPageState extends State<SignupPage> {
             child: Padding(
               padding: const EdgeInsets.all(36.0),
               child: Form(
-                // key: _formKey,
+                key: _formKey,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -374,7 +376,7 @@ Widget genderPicker(BuildContext context) {
   );
 }
 
-void signUp(String email, String password ) async {
+void signUp(String email, String password, context) async {
   if (_formKey.currentState!.validate()) {
     try {
       await _auth

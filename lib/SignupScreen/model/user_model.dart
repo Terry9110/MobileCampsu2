@@ -21,7 +21,7 @@ class UserModel {
     return {
       'uid': uid,
       'email': email,
-      'firstName': fullName,
+      'fullName': fullName,
       'userName': userName,
     };
   }
