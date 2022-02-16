@@ -1,3 +1,4 @@
+import 'package:campus2/Auth/components/ResetPassword/reset_password_screen.dart';
 import 'package:campus2/EventsPage/events_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -78,8 +79,8 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                   InkWell(
                       onTap: () {
-                        // Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        //     builder: (context) =>  EventsPage()));
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => const RestPassword()));
                       },
                       child: Expanded(
                           child: Column(

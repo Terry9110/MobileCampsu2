@@ -1,11 +1,9 @@
-// import 'package:campus2/Auth/components/action_button.dart';
-// import 'package:campus2/Auth/components/auth_text_input.dart';
-// import 'package:campus2/Auth/components/facebook_signin_button.dart';
+
 import 'package:campus2/Auth/components/ResetPassword/reset_password_screen.dart';
 import 'package:campus2/SettingsPage/settings_page.dart';
 import 'package:campus2/SignupScreen/Signup_method.dart';
 import 'package:campus2/SignupSuccessful/success_screen.dart';
-// import 'package:campus2/SignupScreen/signup_screen.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';

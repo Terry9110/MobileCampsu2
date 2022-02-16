@@ -1,3 +1,4 @@
+import 'package:campus2/EventsList/events_list.dart';
 import 'package:campus2/LoginScreen/login_page.dart';
 import 'package:campus2/SignupScreen/signup_screen.dart';
 import 'package:campus2/SignupSuccessful/success_screen.dart';
@@ -5,7 +6,6 @@ import 'package:campus2/globalNav/index.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
-
 
 import 'SignupScreen/model/signupModel.dart';
 
@@ -21,21 +21,21 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(providers: [
-      ChangeNotifierProvider(create: (context) => SignupModel()),
-      // ChangeNotifierProvider(create: (context) => LoginModel()),
-    ],
-    child:   MaterialApp(
-      debugShowCheckedModeBanner: false,
-      // navigatorKey: globalNav.navigatorKey,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: SignupSuccess(),
-      // home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    )
-    );
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => SignupModel()),
+          // ChangeNotifierProvider(create: (context) => LoginModel()),
+        ],
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          // navigatorKey: globalNav.navigatorKey,
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          home: EventsList(),
+          // home: const MyHomePage(title: 'Flutter Demo Home Page'),
+        ));
     // return MaterialApp(
     //   debugShowCheckedModeBanner: false,
     //   title: 'Flutter Demo',
