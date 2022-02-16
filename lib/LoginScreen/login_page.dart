@@ -1,6 +1,7 @@
 // import 'package:campus2/Auth/components/action_button.dart';
 // import 'package:campus2/Auth/components/auth_text_input.dart';
 // import 'package:campus2/Auth/components/facebook_signin_button.dart';
+import 'package:campus2/Auth/components/ResetPassword/reset_password_screen.dart';
 import 'package:campus2/SignupScreen/Signup_method.dart';
 import 'package:campus2/SignupSuccessful/success_screen.dart';
 // import 'package:campus2/SignupScreen/signup_screen.dart';
@@ -123,7 +124,7 @@ class LoginPage extends StatelessWidget {
         height: 50,
         minWidth: MediaQuery.of(context).size.width,
         onPressed: () {
-            signIn(emailController.text, passwordController.text, context);
+          signIn(emailController.text, passwordController.text, context);
         },
         child: Text('Login',
             style: GoogleFonts.poppins(
@@ -176,7 +177,10 @@ class LoginPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => const RestPassword()));
+                            },
                             child: Text("Forgot Password ? ",
                                 style: GoogleFonts.poppins(
                                     color: Colors.black,
@@ -219,7 +223,7 @@ class LoginPage extends StatelessWidget {
 
 // Login Function
 
- void signIn(String email, String password, context) async {
+  void signIn(String email, String password, context) async {
     if (_formKey.currentState!.validate()) {
       try {
         await _auth
@@ -258,5 +262,4 @@ class LoginPage extends StatelessWidget {
       }
     }
   }
-
 }

@@ -59,7 +59,7 @@ class PhoneSignUpScreen extends StatelessWidget {
             AuthTextInput(
               inputType: TextInputType.emailAddress,
               label: "phone number",
-              hintText: "johndoe@gmail.com",
+              hintText: "+19788494391",
               // value: provider.email,
               onChanged: (txt) {
                 // provider.setEmail(txt);
@@ -97,12 +97,12 @@ class PhoneSignUpScreen extends StatelessWidget {
                   // );
                 },
                 child: Center(
-                      child: Text('Get OTP 2.0',
-                          style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white,
-                              fontSize: 14)))
-            )],
+                    child: Text('Get OTP 2.0',
+                        style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                            fontSize: 14))))
+          ],
         ),
       ),
     );
