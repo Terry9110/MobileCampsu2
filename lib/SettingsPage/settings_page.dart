@@ -1,3 +1,4 @@
+import 'package:campus2/EventsPage/events_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -72,25 +73,33 @@ class _SettingsPageState extends State<SettingsPage> {
                   profileDetails(fieldName: "Last Name", value: "Larson"),
                   profileDetails(
                       fieldName: "Email", value: "annie.larson@gmail.com"),
-                  Expanded(
-                      child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        width: 150,
-                        padding: const EdgeInsets.all(15),
-                        decoration: BoxDecoration(
-                            color: const Color(0xFFe63900).withOpacity(0.8),
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(5))),
-                        child: Center(
-                            child: Text("Change Password",
-                                style: GoogleFonts.poppins(
-                                    color: Colors.white, fontSize: 12))),
-                      )
-                    ],
-                  ))
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  InkWell(
+                      onTap: () {
+                        // Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        //     builder: (context) =>  EventsPage()));
+                      },
+                      child: Expanded(
+                          child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            width: 150,
+                            padding: const EdgeInsets.all(15),
+                            decoration: BoxDecoration(
+                                color: const Color(0xFFe63900).withOpacity(0.8),
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(5))),
+                            child: Center(
+                                child: Text("Change Password",
+                                    style: GoogleFonts.poppins(
+                                        color: Colors.white, fontSize: 12))),
+                          )
+                        ],
+                      ))),
                 ],
               ),
             ),
