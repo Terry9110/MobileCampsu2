@@ -1,6 +1,8 @@
-import 'package:campus2/theme.dart';
+// import 'package:campsu/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../theme.dart';
 
 class EventsPage extends StatefulWidget {
   const EventsPage(
