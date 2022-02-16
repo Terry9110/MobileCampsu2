@@ -1,6 +1,8 @@
 import 'package:campus2/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:campus2/EventsDetail/model/event_list_model.dart';
 
 class EventsList extends StatefulWidget {
   @override
@@ -8,8 +10,19 @@ class EventsList extends StatefulWidget {
 }
 
 class _EventsList extends State<EventsList> {
+  // var _eventsList = null;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // _eventsList = Provider.of<EventListModel>(context, listen: false);
+  }
+
   @override
   Widget build(BuildContext context) {
+    var _eventsList = Provider.of<EventListModel>(context, listen: false);
+
     return Scaffold(
       bottomNavigationBar: Container(
           height: 70,
@@ -139,18 +152,29 @@ class _EventsList extends State<EventsList> {
               )),
           const SizedBox(height: 5),
           Expanded(
-            child: Container(
-                padding: const EdgeInsets.only(
-                    left: 15, right: 15, bottom: 10, top: 0),
-                child: ListView(children: [
-                  Text("Upcoming Events",
-                      style: GoogleFonts.poppins(
-                          color: Colors.grey[800],
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600)),
-                  const SizedBox(height: 10),
-                ])),
-          )
+              child: Container(
+            padding:
+                const EdgeInsets.only(left: 15, right: 15, bottom: 10, top: 0),
+            child: ListView.builder(
+                itemCount: _eventsList.eventsList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return ListTile(
+                      leading: Icon(Icons.list),
+                      trailing: Text(
+                        "GFG",
+                        style: TextStyle(color: Colors.green, fontSize: 15),
+                      ),
+                      title: Text("List item $index"));
+                }),
+            // child: ListView(children: [
+            //   Text("Upcoming Events",
+            //       style: GoogleFonts.poppins(
+            //           color: Colors.grey[800],
+            //           fontSize: 12,
+            //           fontWeight: FontWeight.w600)),
+            //   const SizedBox(height: 10),
+            // ]
+          )),
         ],
       ),
     );

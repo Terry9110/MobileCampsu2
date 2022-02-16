@@ -3,6 +3,8 @@ import 'package:campus2/EventsPage/events_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../theme.dart';
+
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
 
@@ -77,30 +79,25 @@ class _SettingsPageState extends State<SettingsPage> {
                   const SizedBox(
                     height: 40,
                   ),
-                  InkWell(
-                      onTap: () {
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => const RestPassword()));
-                      },
-                      child: Expanded(
-                          child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: 150,
-                            padding: const EdgeInsets.all(15),
-                            decoration: BoxDecoration(
-                                color: const Color(0xFFe63900).withOpacity(0.8),
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(5))),
-                            child: Center(
-                                child: Text("Change Password",
-                                    style: GoogleFonts.poppins(
-                                        color: Colors.white, fontSize: 12))),
-                          )
-                        ],
-                      ))),
+                  Expanded(
+                      child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: 150,
+                        padding: const EdgeInsets.all(15),
+                        decoration: BoxDecoration(
+                            color: activeRedPrimary.withOpacity(0.8),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(5))),
+                        child: Center(
+                            child: Text("Change Password",
+                                style: GoogleFonts.poppins(
+                                    color: Colors.white, fontSize: 12))),
+                      )
+                    ],
+                  ))
                 ],
               ),
             ),

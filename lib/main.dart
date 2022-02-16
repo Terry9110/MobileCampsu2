@@ -1,5 +1,7 @@
+import 'package:campus2/EventsDetail/model/event_list_model.dart';
 import 'package:campus2/EventsList/events_list.dart';
 import 'package:campus2/LoginScreen/login_page.dart';
+import 'package:campus2/SettingsPage/settings_page.dart';
 import 'package:campus2/SignupScreen/signup_screen.dart';
 import 'package:campus2/SignupSuccessful/success_screen.dart';
 import 'package:campus2/globalNav/index.dart';
@@ -24,6 +26,8 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => SignupModel()),
+          ChangeNotifierProvider(create: (context) => EventListModel()),
+
           // ChangeNotifierProvider(create: (context) => LoginModel()),
         ],
         child: MaterialApp(
@@ -88,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    return LoginPage();
+    return const SettingsPage();
 
     // MaterialApp(
     //   title: 'Campsu,',
