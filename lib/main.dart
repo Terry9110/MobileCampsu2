@@ -3,6 +3,7 @@ import 'package:campus2/EventsList/events_list.dart';
 import 'package:campus2/EventsPage/events_page.dart';
 import 'package:campus2/LoginScreen/login_page.dart';
 import 'package:campus2/SettingsPage/settings_page.dart';
+import 'package:campus2/SignupScreen/Signup_method.dart';
 import 'package:campus2/SignupScreen/signup_screen.dart';
 import 'package:campus2/SignupSuccessful/success_screen.dart';
 import 'package:campus2/globalNav/index.dart';
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
-          home: EventsList(),
+          home: SignUpMethod(),
           // home: const MyHomePage(title: 'Flutter Demo Home Page'),
         ));
     // return MaterialApp(

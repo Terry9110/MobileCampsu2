@@ -41,9 +41,9 @@ class EventListModel extends ChangeNotifier {
     print(eventsRef);
     if (nextQuery == null) {
       query = eventsRef
-          .where("active", isEqualTo: true)
-          .where("event_date", isGreaterThan: DateTime.now())
-          .orderBy("event_date")
+          // .where("active", isEqualTo: true)
+          // .where("event_date", isGreaterThan: DateTime.now())
+          // .orderBy("event_date")
           .limit(25);
     } else {
       query = nextQuery;
@@ -72,17 +72,18 @@ class EventListModel extends ChangeNotifier {
             "views": doc.get("views"),
           };
           _eventsList.add(eventData);
+          notifyListeners();
         } catch (e) {
           print(e);
         }
       }
       if (snap.docs.isNotEmpty) {
         print("No Elements");
-        nextQuery = eventsRef
-            .where("active", isEqualTo: true)
-            .where("event_date", isGreaterThan: DateTime.now())
-            .orderBy("event_date")
-            .startAfter([snap.docs.last]);
+        nextQuery = eventsRef;
+        // .where("active", isEqualTo: true)
+        // .where("event_date", isGreaterThan: DateTime.now())
+        // .orderBy("event_date")
+        // .startAfter([snap.docs.last]);
       }
       setLoading(false);
       notifyListeners();
@@ -92,5 +93,27 @@ class EventListModel extends ChangeNotifier {
       setLoading(false);
       setErrorMessage(e.toString());
     });
+  }
+
+  getEventsList2() async {
+    setLoading(true);
+    setErrorMessage(null);
+
+    Query? query;
+
+    CollectionReference eventsRef = firestore.collection("Events");
+    print('This is event ref');
+    print(eventsRef);
+    if (nextQuery == null) {
+      query = eventsRef
+          .where("active", isEqualTo: true)
+          // .where("event_date", isGreaterThan: DateTime.now())
+          .orderBy("event_date")
+          .limit(25);
+      print('This is query');
+      print(query);
+    } else {
+      query = nextQuery;
+    }
   }
 }

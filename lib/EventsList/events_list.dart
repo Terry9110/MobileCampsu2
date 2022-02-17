@@ -26,7 +26,7 @@ class _EventsList extends State<EventsList> {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<EventListModel>(context);
-    // print(provider.eventsList);
+    print(provider.eventsList);
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       final provider = Provider.of<EventListModel>(context, listen: false);
       provider.getEventsList();
