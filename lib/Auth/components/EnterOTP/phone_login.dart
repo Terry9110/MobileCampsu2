@@ -1,13 +1,24 @@
 import 'package:campus2/Auth/components/EnterOTP/model/verification.dart';
 import 'package:campus2/Auth/components/EnterOTP/phone_auth.dart';
 import 'package:campus2/Auth/components/auth_text_input.dart';
+import 'package:campus2/EventsList/events_list.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class PhoneSignUpScreen extends StatelessWidget {
   // const PhoneSignUpScreen({Key? key}) : super(key: key);
 
   TextEditingController phoneNumber = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController otpController = TextEditingController();
+
+  FirebaseAuth auth = FirebaseAuth.instance;
+
+  bool otpVisibility = false;
+
+  String verificationID = "";
 
   PhoneSignUpScreen({Key? key}) : super(key: key);
 
@@ -56,36 +67,94 @@ class PhoneSignUpScreen extends StatelessWidget {
                 style:
                     GoogleFonts.poppins(color: Colors.grey[500], fontSize: 18)),
             const SizedBox(height: 30),
-            AuthTextInput(
-              inputType: TextInputType.emailAddress,
-              label: "phone number",
-              hintText: "+19788494391",
-              // value: provider.email,
-              onChanged: (txt) {
-                // provider.setEmail(txt);
-              },
+            Container(
+              child: TextField(
+                controller: phoneController,
+                decoration: InputDecoration(
+                    hintStyle: GoogleFonts.poppins(color: Colors.grey[400]),
+                    hintText: 'Phone Number',
+                    contentPadding: const EdgeInsets.only(
+                        left: 20, top: 15, bottom: 15, right: 5),
+                    label: Text('Phone Number',
+                        style: GoogleFonts.poppins(
+                            color: Colors.grey[500], fontSize: 12)),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide:
+                          const BorderSide(width: 1, color: Colors.grey),
+                    ),
+                    focusedErrorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                        borderSide: const BorderSide(
+                            width: 1, color: Color(0xFFe63900))),
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                        borderSide: const BorderSide(
+                            width: 1, color: Color(0xFFe63900)))),
+                maxLength: 10,
+                keyboardType: TextInputType.phone,
+              ),
             ),
+            Visibility(
+              child: TextField(
+                controller: otpController,
+                decoration: InputDecoration(
+                  hintText: 'OTP',
+                  prefix: Padding(
+                    padding: EdgeInsets.all(4),
+                    child: Text(''),
+                  ),
+                ),
+                maxLength: 6,
+                keyboardType: TextInputType.number,
+              ),
+              visible: otpVisibility,
+            ),
+            // AuthTextInput(
+            //   inputType: TextInputType.emailAddress,
+            //   label: "phone number",
+            //   hintText: "+19788494391",
+            //   // value: provider.email,
+            //   onChanged: (txt) {
+            //     // provider.setEmail(txt);
+            //   },
+            // ),
             SizedBox(height: 15),
             InkWell(
               onTap: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => EnterOTP()));
+                 if (otpVisibility) {
+                  verifyOTP();
+                } else {
+                  loginWithPhone();
+                }
+                
+                // Navigator.of(context)
+                //     .push(MaterialPageRoute(builder: (context) => EnterOTP()));
               },
-              child: Container(
-                  height: 50,
-                  width: width,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      gradient: LinearGradient(colors: [
-                        const Color(0xFF006633),
-                        const Color(0xFF006633).withOpacity(0.8),
-                      ])),
-                  child: Center(
-                      child: Text('Get OTP',
-                          style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white,
-                              fontSize: 14)))),
+                child: Text(
+                otpVisibility ? "Verify" : "Login",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                ),
+              ),
+
+              
+              // child: Container(
+              //     height: 50,
+              //     width: width,
+              //     decoration: BoxDecoration(
+              //         borderRadius: BorderRadius.circular(15),
+              //         gradient: LinearGradient(colors: [
+              //           const Color(0xFF006633),
+              //           const Color(0xFF006633).withOpacity(0.8),
+              //         ])),
+              //     child: Center(
+              //         child: Text('Get OTP',
+              //             style: GoogleFonts.poppins(
+              //                 fontWeight: FontWeight.w600,
+              //                 color: Colors.white,
+              //                 fontSize: 14)))),
             ),
             ElevatedButton(
                 onPressed: () {
@@ -107,4 +176,54 @@ class PhoneSignUpScreen extends StatelessWidget {
       ),
     );
   }
+    void loginWithPhone() async {
+    auth.verifyPhoneNumber(
+      phoneNumber: "+91" + phoneController.text,
+      verificationCompleted: (PhoneAuthCredential credential) async {
+        await auth.signInWithCredential(credential).then((value) {
+          print("You are logged in successfully");
+        });
+      },
+      verificationFailed: (FirebaseAuthException e) {
+        print(e.message);
+      },
+      codeSent: (String verificationId, int? resendToken) {
+        otpVisibility = true;
+        verificationID = verificationId;
+        
+        // setState(() {});
+      },
+      codeAutoRetrievalTimeout: (String verificationId) {},
+    );
+  }
+
+  void verifyOTP() async {
+    PhoneAuthCredential credential = PhoneAuthProvider.credential(
+        verificationId: verificationID, smsCode: otpController.text);
+
+    await auth.signInWithCredential(credential).then(
+      (value) {
+        print("You are logged in successfully");
+        Fluttertoast.showToast(
+          msg: "You are logged in successfully",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+      },
+    ).whenComplete(
+      () {
+        // Navigator.pushReplacement(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => EventsList(),
+        //   ),
+        // );
+      },
+    );
+  }
+
 }
