@@ -1,3 +1,6 @@
+import 'package:campus2/Auth/components/EnterOTP/login_with_phone.dart';
+import 'package:campus2/Auth/components/EnterOTP/phone_auth.dart';
+import 'package:campus2/Auth/components/EnterOTP/phone_login.dart';
 import 'package:campus2/EventsDetail/model/event_list_model.dart';
 import 'package:campus2/EventsList/events_list.dart';
 import 'package:campus2/EventsPage/events_page.dart';
@@ -39,7 +42,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
-          home: SignUpMethod(),
+          home: LoginPage(),
           // home: const MyHomePage(title: 'Flutter Demo Home Page'),
         ));
     // return MaterialApp(

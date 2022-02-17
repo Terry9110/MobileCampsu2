@@ -36,6 +36,7 @@ class _EventsList extends State<EventsList> {
     return SafeArea(
         top: true,
         child: Scaffold(
+          // app
             bottomNavigationBar: bottomBar(),
             body: Column(
               mainAxisAlignment: MainAxisAlignment.start,
