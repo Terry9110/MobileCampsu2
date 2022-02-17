@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
-          home: PhoneSignUpScreen(),
+          home: LoginWithPhone(),
           // home: const MyHomePage(title: 'Flutter Demo Home Page'),
         ));
     // return MaterialApp(
