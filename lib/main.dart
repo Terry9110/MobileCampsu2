@@ -1,5 +1,6 @@
 import 'package:campus2/EventsDetail/model/event_list_model.dart';
 import 'package:campus2/EventsList/events_list.dart';
+import 'package:campus2/EventsPage/events_page.dart';
 import 'package:campus2/LoginScreen/login_page.dart';
 import 'package:campus2/SettingsPage/settings_page.dart';
 import 'package:campus2/SignupScreen/signup_screen.dart';
@@ -92,7 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    return const SettingsPage();
+    return  LoginPage();
 
     // MaterialApp(
     //   title: 'Campsu,',

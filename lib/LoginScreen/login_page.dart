@@ -1,5 +1,5 @@
-
 import 'package:campus2/Auth/components/ResetPassword/reset_password_screen.dart';
+import 'package:campus2/EventsList/events_list.dart';
 import 'package:campus2/SettingsPage/settings_page.dart';
 import 'package:campus2/SignupScreen/Signup_method.dart';
 import 'package:campus2/SignupSuccessful/success_screen.dart';
@@ -26,8 +26,21 @@ class LoginPage extends StatelessWidget {
   // string for displaying the error Message
   String? errorMessage;
 
-  @override
   Widget build(BuildContext context) {
+    return StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (_, AsyncSnapshot<User?> snap) {
+          if (snap.hasData) {
+            if (snap.data != null) {
+              return EventsList();
+            }
+          }
+          return buildUI(context);
+        });
+  }
+
+  @override
+  Widget buildUI(context) {
     //email field
     final emailField = TextFormField(
       autofocus: false,
@@ -178,7 +191,7 @@ class LoginPage extends StatelessWidget {
                         GestureDetector(
                             onTap: () {
                               Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => const RestPassword()));
+                                  builder: (context) => const EventsList()));
                             },
                             child: Text("Forgot Password ? ",
                                 style: GoogleFonts.poppins(

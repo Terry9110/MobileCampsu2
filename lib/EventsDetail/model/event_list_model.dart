@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
-
 class EventListModel extends ChangeNotifier {
   bool _isLoading = false;
   String? _errMessage;
@@ -18,7 +17,7 @@ class EventListModel extends ChangeNotifier {
 
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   FirebaseAuth auth = FirebaseAuth.instance;
-  
+
   FirebaseStorage storage = FirebaseStorage.instance;
 
   void setLoading(bool val) {
@@ -38,7 +37,8 @@ class EventListModel extends ChangeNotifier {
     Query? query;
 
     CollectionReference eventsRef = firestore.collection("Events");
-
+    print('This is event ref');
+    print(eventsRef);
     if (nextQuery == null) {
       query = eventsRef
           .where("active", isEqualTo: true)
