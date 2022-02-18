@@ -1,13 +1,14 @@
+import 'package:campus2/SignupScreen/signup_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pinput/pin_put/pin_put.dart';
-
-
 
 class OTPScreen extends StatefulWidget {
   final String phone;
   OTPScreen(this.phone);
+
   // const OTPSCreen({Key? key}) : super(key: key);
 
   @override
@@ -15,7 +16,15 @@ class OTPScreen extends StatefulWidget {
 }
 
 class _OTPScreenState extends State<OTPScreen> {
-   final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController otpController = TextEditingController();
+
+  FirebaseAuth auth = FirebaseAuth.instance;
+
+  bool otpVisibility = false;
+
+  String verificationID = "";
+  final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
   var _verificationCode;
   final TextEditingController _pinPutController = TextEditingController();
   final FocusNode _pinPutFocusNode = FocusNode();
@@ -27,11 +36,11 @@ class _OTPScreenState extends State<OTPScreen> {
     ),
   );
   @override
-    void initState() {
+  void initState() {
     // TODO: implement initState
     super.initState();
-    _verifyPhone();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,22 +75,7 @@ class _OTPScreenState extends State<OTPScreen> {
               pinAnimationType: PinAnimationType.fade,
               onSubmit: (pin) async {
                 try {
-                  await FirebaseAuth.instance
-                      .signInWithCredential(PhoneAuthProvider.credential(
-                      verificationId: _verificationCode, smsCode: pin))
-                      .then((value) async {
-                    CupertinoAlertDialog(
-                      title: Text("Phone Authentication"),
-                      content: Text("Phone Number verified!!!"),
-                      actions: [
-                        CupertinoButton(
-                            child: Text('Close'),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            }),
-                      ],
-                    );
-                  });
+                  verifyOTP();
                 } catch (e) {
                   FocusScope.of(context).unfocus();
                   _scaffoldkey.currentState!
@@ -95,7 +89,7 @@ class _OTPScreenState extends State<OTPScreen> {
     );
   }
 
-  _verifyPhone() async {
+  _verifyPhone(context) async {
     await FirebaseAuth.instance.verifyPhoneNumber(
         phoneNumber: '${widget.phone}',
         verificationCompleted: (PhoneAuthCredential credential) async {
@@ -118,7 +112,7 @@ class _OTPScreenState extends State<OTPScreen> {
         verificationFailed: (FirebaseAuthException e) {
           print(e.message);
         },
-        codeSent: (verficationID,  resendToken) {
+        codeSent: (verficationID, resendToken) {
           setState(() {
             _verificationCode = verficationID;
           });
@@ -131,5 +125,32 @@ class _OTPScreenState extends State<OTPScreen> {
         timeout: Duration(seconds: 120));
   }
 
+  void verifyOTP() async {
+    PhoneAuthCredential credential = PhoneAuthProvider.credential(
+        verificationId: verificationID, smsCode: otpController.text);
 
+    await auth.signInWithCredential(credential).then(
+      (value) {
+        print("You are logged in successfully");
+        Fluttertoast.showToast(
+          msg: "You are logged in successfully",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+      },
+    ).whenComplete(
+      () {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SignupPage(),
+          ),
+        );
+      },
+    );
+  }
 }

@@ -91,7 +91,7 @@ class PhoneSignUpScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(15),
                         borderSide: const BorderSide(
                             width: 1, color: Color(0xFFe63900)))),
-                maxLength: 10,
+                maxLength: 14,
                 keyboardType: TextInputType.phone,
               ),
             ),
@@ -122,16 +122,12 @@ class PhoneSignUpScreen extends StatelessWidget {
             SizedBox(height: 15),
             InkWell(
               onTap: () {
-                 if (otpVisibility) {
-                  verifyOTP();
-                } else {
-                  loginWithPhone();
-                }
-                
+                loginWithPhone(context);
+
                 // Navigator.of(context)
                 //     .push(MaterialPageRoute(builder: (context) => EnterOTP()));
               },
-                child: Text(
+              child: Text(
                 otpVisibility ? "Verify" : "Login",
                 style: TextStyle(
                   color: Colors.white,
@@ -139,7 +135,6 @@ class PhoneSignUpScreen extends StatelessWidget {
                 ),
               ),
 
-              
               // child: Container(
               //     height: 50,
               //     width: width,
@@ -158,12 +153,7 @@ class PhoneSignUpScreen extends StatelessWidget {
             ),
             ElevatedButton(
                 onPressed: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     // builder: (context) => OTPScreen(phoneNumber.text),
-                  //   ),
-                  // );
+                  loginWithPhone(context);
                 },
                 child: Center(
                     child: Text('Get OTP 2.0',
@@ -176,9 +166,10 @@ class PhoneSignUpScreen extends StatelessWidget {
       ),
     );
   }
-    void loginWithPhone() async {
+
+  void loginWithPhone(context) async {
     auth.verifyPhoneNumber(
-      phoneNumber: "+91" + phoneController.text,
+      phoneNumber: phoneController.text,
       verificationCompleted: (PhoneAuthCredential credential) async {
         await auth.signInWithCredential(credential).then((value) {
           print("You are logged in successfully");
@@ -188,42 +179,19 @@ class PhoneSignUpScreen extends StatelessWidget {
         print(e.message);
       },
       codeSent: (String verificationId, int? resendToken) {
-        otpVisibility = true;
-        verificationID = verificationId;
-        
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => OTPScreen(phoneNumber.text),
+          ),
+        );
+
+        // otpVisibility = true;
+        // verificationID = verificationId;
+
         // setState(() {});
       },
       codeAutoRetrievalTimeout: (String verificationId) {},
     );
   }
-
-  void verifyOTP() async {
-    PhoneAuthCredential credential = PhoneAuthProvider.credential(
-        verificationId: verificationID, smsCode: otpController.text);
-
-    await auth.signInWithCredential(credential).then(
-      (value) {
-        print("You are logged in successfully");
-        Fluttertoast.showToast(
-          msg: "You are logged in successfully",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0,
-        );
-      },
-    ).whenComplete(
-      () {
-        // Navigator.pushReplacement(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (context) => EventsList(),
-        //   ),
-        // );
-      },
-    );
-  }
-
 }
