@@ -72,7 +72,7 @@ class PhoneSignUpScreen extends StatelessWidget {
                 controller: phoneController,
                 decoration: InputDecoration(
                     hintStyle: GoogleFonts.poppins(color: Colors.grey[400]),
-                    hintText: 'Phone Number',
+                    hintText: '+17538431234',
                     contentPadding: const EdgeInsets.only(
                         left: 20, top: 15, bottom: 15, right: 5),
                     label: Text('Phone Number',
@@ -123,44 +123,66 @@ class PhoneSignUpScreen extends StatelessWidget {
             InkWell(
               onTap: () {
                 loginWithPhone(context);
-
-                // Navigator.of(context)
-                //     .push(MaterialPageRoute(builder: (context) => EnterOTP()));
               },
-              child: Text(
-                otpVisibility ? "Verify" : "Login",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                ),
-              ),
-
-              // child: Container(
-              //     height: 50,
-              //     width: width,
-              //     decoration: BoxDecoration(
-              //         borderRadius: BorderRadius.circular(15),
-              //         gradient: LinearGradient(colors: [
-              //           const Color(0xFF006633),
-              //           const Color(0xFF006633).withOpacity(0.8),
-              //         ])),
-              //     child: Center(
-              //         child: Text('Get OTP',
-              //             style: GoogleFonts.poppins(
-              //                 fontWeight: FontWeight.w600,
-              //                 color: Colors.white,
-              //                 fontSize: 14)))),
-            ),
-            ElevatedButton(
-                onPressed: () {
-                  loginWithPhone(context);
-                },
-                child: Center(
-                    child: Text('Get OTP 2.0',
+              child: Container(
+                  height: 50,
+                  width: width,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      gradient: LinearGradient(colors: [
+                        const Color(0xFF006633),
+                        const Color(0xFF006633).withOpacity(0.8),
+                      ])),
+                  child: Center(
+                    child: Text('Get OTP',
                         style: GoogleFonts.poppins(
                             fontWeight: FontWeight.w600,
                             color: Colors.white,
-                            fontSize: 14))))
+                            fontSize: 14)),
+                  )),
+            ),
+
+            // InkWell(
+            //   onTap: () {
+            //     loginWithPhone(context);
+
+            //     // Navigator.of(context)
+            //     //     .push(MaterialPageRoute(builder: (context) => EnterOTP()));
+            //   },
+            //   child: Text(
+            //     otpVisibility ? "Verify" : "Login",
+            //     style: TextStyle(
+            //       color: Colors.white,
+            //       fontSize: 20,
+            //     ),
+            //   ),
+
+            //   // child: Container(
+            //   //     height: 50,
+            //   //     width: width,
+            //   //     decoration: BoxDecoration(
+            //   //         borderRadius: BorderRadius.circular(15),
+            //   //         gradient: LinearGradient(colors: [
+            //   //           const Color(0xFF006633),
+            //   //           const Color(0xFF006633).withOpacity(0.8),
+            //   //         ])),
+            //   //     child: Center(
+            //   //         child: Text('Get OTP',
+            //   //             style: GoogleFonts.poppins(
+            //   //                 fontWeight: FontWeight.w600,
+            //   //                 color: Colors.white,
+            //   //                 fontSize: 14)))),
+            // ),
+            // ElevatedButton(
+            //     onPressed: () {
+            //       loginWithPhone(context);
+            //     },
+            //     child: Center(
+            //         child: Text('Get OTP 2.0',
+            //             style: GoogleFonts.poppins(
+            //                 fontWeight: FontWeight.w600,
+            //                 color: Colors.white,
+            //                 fontSize: 14))))
           ],
         ),
       ),
