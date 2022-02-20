@@ -36,11 +36,16 @@ class _SettingsPageState extends State<SettingsPage> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Icon(Icons.arrow_back, color: Colors.white),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    InkWell(
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
+                        child:
+                            const Icon(Icons.arrow_back, color: Colors.white)),
                     const SizedBox(width: 10),
-                    Text("Profile",
-                        style: GoogleFonts.poppins(
-                            color: Colors.white, fontSize: 16))
                   ],
                 )
               ],

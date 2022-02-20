@@ -1,8 +1,8 @@
-import 'package:campus2/Auth/components/ResetPassword/reset_password_screen.dart';
+// import 'package:campus2/Auth/components/ResetPassword/reset_password_screen.dart';
 import 'package:campus2/EventsList/events_list.dart';
-import 'package:campus2/SettingsPage/settings_page.dart';
+// import 'package:campus2/SettingsPage/settings_page.dart';
 import 'package:campus2/SignupScreen/Signup_method.dart';
-import 'package:campus2/SignupSuccessful/success_screen.dart';
+// import 'package:campus2/SignupSuccessful/success_screen.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -243,7 +243,7 @@ class LoginPage extends StatelessWidget {
             .then((uid) => {
                   Fluttertoast.showToast(msg: "Login Successful"),
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) => const SettingsPage())),
+                      builder: (context) => const EventsList())),
                 });
       } on FirebaseAuthException catch (error) {
         switch (error.code) {

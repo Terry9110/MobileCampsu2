@@ -2,6 +2,7 @@ import 'package:campus2/Auth/components/EnterOTP/phone_login.dart';
 import 'package:campus2/EventsDetail/model/event_list_model.dart';
 import 'package:campus2/EventsList/events_list.dart';
 import 'package:campus2/LoginScreen/login_page.dart';
+import 'package:campus2/LoginScreen/login_screen.dart';
 import 'package:campus2/SignupScreen/Signup_method.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
-          home: EventsList(),
+          home: LoginPage(),
           // home: EventsList(),
           // home: const MyHomePage(title: 'Flutter Demo Home Page'),
         ));

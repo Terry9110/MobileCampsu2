@@ -1,5 +1,7 @@
 import 'package:campus2/EventsDetail/events_details_widget.dart';
+import 'package:campus2/SettingsPage/settings_page.dart';
 import 'package:campus2/theme.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -38,19 +40,28 @@ class _EventsList extends State<EventsList> {
         // top: true,
         child: Scaffold(
             appBar: AppBar(
-              title: Text('Events'),
+              backgroundColor: activeGreenPrimary,
+              title: Text('Events',
+                  style: GoogleFonts.poppins(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600)),
+              actions: const [
+                Icon(Icons.notifications_outlined, color: Colors.white),
+                SizedBox(width: 5),
+                Icon(Icons.near_me_outlined, color: Colors.white),
+                SizedBox(width: 5),
+                Icon(Icons.filter_alt_outlined, color: Colors.white)
+              ],
             ),
             drawer: Drawer(
               child: ListView(
                 children: [
-                  UserAccountsDrawerHeader(
+                  const UserAccountsDrawerHeader(
                     accountName: Text("Ashish Rawat"),
                     accountEmail: Text("ashishrawat2911@gmail.com"),
                     currentAccountPicture: CircleAvatar(
-                      backgroundColor:
-                          Theme.of(context).platform == TargetPlatform.iOS
-                              ? Colors.blue
-                              : Colors.white,
+                      backgroundColor: Colors.white,
                       child: Text(
                         "A",
                         style: TextStyle(fontSize: 40.0),
@@ -58,14 +69,33 @@ class _EventsList extends State<EventsList> {
                     ),
                   ),
                   ListTile(
-                    title: Text("Ttem 1"),
-                    trailing: Icon(Icons.arrow_forward),
+                    title: const Text("Ttem 1"),
+                    trailing: const Icon(Icons.arrow_forward),
                     onTap: () {},
                   ),
                   ListTile(
-                    title: Text("Item 2"),
-                    trailing: Icon(Icons.arrow_forward),
+                    title: const Text("Item 2"),
+                    trailing: const Icon(Icons.arrow_forward),
                     onTap: () {},
+                  ),
+                  ListTile(
+                    title: const Text("Profile Page"),
+                    trailing: const Icon(Icons.arrow_forward),
+                    onTap: () {
+                      // Navigator.of(context).push(MaterialPageRoute(
+                      //     builder: (context) => const SettingsPage()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const SettingsPage()));
+                    },
+                  ),
+                  ListTile(
+                    title: const Text("Logout"),
+                    trailing: const Icon(Icons.arrow_forward),
+                    onTap: () {
+                      FirebaseAuth.instance.signOut();
+                    },
                   ),
                 ],
               ),
@@ -75,7 +105,7 @@ class _EventsList extends State<EventsList> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // topBar(),
+                searchBar(),
                 Expanded(
                     child: Container(
                   padding: const EdgeInsets.only(
@@ -180,6 +210,48 @@ class _EventsList extends State<EventsList> {
             ),
           ],
         ));
+  }
+
+  Widget searchBar() {
+    return Container(
+      height: 50,
+      width: MediaQuery.of(context).size.width,
+      margin: const EdgeInsets.only(top: 70),
+      padding: const EdgeInsets.only(left: 20, right: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            width: MediaQuery.of(context).size.width - 40,
+            decoration: const BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey,
+                    blurRadius: 10.0,
+                  ),
+                ],
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(30))),
+            padding:
+                const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
+            child: TextField(
+                decoration: InputDecoration(
+                    hintText: "Search Events...",
+                    contentPadding: const EdgeInsets.only(top: 30, left: 20),
+                    hintStyle: GoogleFonts.poppins(
+                        color: Colors.grey[400],
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600),
+                    border: InputBorder.none,
+                    suffixIcon: Icon(
+                      Icons.search,
+                      color: Colors.grey[500],
+                    ))),
+          )
+        ],
+      ),
+    );
   }
 
   Widget topBar() {
