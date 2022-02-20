@@ -34,15 +34,48 @@ class _EventsList extends State<EventsList> {
       print(provider.eventsList);
     });
     return SafeArea(
-        top: true,
+
+        // top: true,
         child: Scaffold(
-          // app
+            appBar: AppBar(
+              title: Text('Events'),
+            ),
+            drawer: Drawer(
+              child: ListView(
+                children: [
+                  UserAccountsDrawerHeader(
+                    accountName: Text("Ashish Rawat"),
+                    accountEmail: Text("ashishrawat2911@gmail.com"),
+                    currentAccountPicture: CircleAvatar(
+                      backgroundColor:
+                          Theme.of(context).platform == TargetPlatform.iOS
+                              ? Colors.blue
+                              : Colors.white,
+                      child: Text(
+                        "A",
+                        style: TextStyle(fontSize: 40.0),
+                      ),
+                    ),
+                  ),
+                  ListTile(
+                    title: Text("Ttem 1"),
+                    trailing: Icon(Icons.arrow_forward),
+                    onTap: () {},
+                  ),
+                  ListTile(
+                    title: Text("Item 2"),
+                    trailing: Icon(Icons.arrow_forward),
+                    onTap: () {},
+                  ),
+                ],
+              ),
+            ),
             bottomNavigationBar: bottomBar(),
             body: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                topBar(),
+                // topBar(),
                 Expanded(
                     child: Container(
                   padding: const EdgeInsets.only(
@@ -163,6 +196,7 @@ class _EventsList extends State<EventsList> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // divider(),
               const Icon(Icons.menu, color: Colors.white),
               const SizedBox(width: 20),
               Text('Events',
