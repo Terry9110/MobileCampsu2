@@ -28,27 +28,28 @@ class _SettingsPageState extends State<SettingsPage> {
                 borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(80),
                     bottomRight: Radius.circular(200))),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    InkWell(
-                        onTap: () {
-                          Navigator.of(context).pop();
-                        },
-                        child:
-                            const Icon(Icons.arrow_back, color: Colors.white)),
-                    const SizedBox(width: 10),
-                  ],
-                )
-              ],
+            child: InkWell(
+              onTap: () {
+                Navigator.of(context).pop();
+                print('This is print');
+              },
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Icon(Icons.arrow_back, color: Colors.white),
+                      SizedBox(width: 10),
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
           Container(
