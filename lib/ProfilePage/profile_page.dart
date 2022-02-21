@@ -1,5 +1,8 @@
+import 'package:campus2/SignupScreen/model/user_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 import '../theme.dart';
 
@@ -8,6 +11,13 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    User? user = FirebaseAuth.instance.currentUser;
+    print(user);
+
+    // final userProvider = Provider.of<UserModel>(context);
+    //   final fullname = userProvider.fullName;
+    // final fullNameController = TextEditingController();
+
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -82,7 +92,9 @@ class ProfilePage extends StatelessWidget {
                           color: Colors.grey[800],
                           fontWeight: FontWeight.w600)),
                   const SizedBox(height: 20),
-                  profileDetails(fieldName: "UserName", value: "annielarson"),
+                  profileDetails(
+                      fieldName: "UserName",
+                      value: FirebaseAuth.instance.currentUser!.displayName),
                   profileDetails(fieldName: "First Name", value: "Annie"),
                   profileDetails(fieldName: "Last Name", value: "Larson"),
                   profileDetails(
@@ -148,7 +160,7 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  Widget profileDetails({required String fieldName, required String value}) {
+  Widget profileDetails({required String fieldName, required value}) {
     return Container(
         margin: const EdgeInsets.only(top: 5, bottom: 10),
         child: Row(

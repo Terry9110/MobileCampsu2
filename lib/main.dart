@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'SignupScreen/model/signupModel.dart';
+import 'SignupScreen/model/user_model.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => SignupModel()),
         ChangeNotifierProvider(create: (context) => EventListModel()),
+        ChangeNotifierProvider(create: (context) => UserModel()),
 
         // ChangeNotifierProvider(create: (context) => LoginModel()),
       ],
@@ -34,7 +36,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
-          home: ProfilePage()),
+          home: LoginPage()),
     );
     // return MaterialApp(
     //   debugShowCheckedModeBanner: false,
