@@ -50,6 +50,10 @@ dependencies:
   fluttertoast: ^8.0.8
   firebase_storage: ^10.2.7
   toggle_switch: ^1.4.0
+  stripe: ^4.5.0
+  http: ^0.13.4
+
+
 
 
 dev_dependencies:
