@@ -1,5 +1,5 @@
 import 'package:campus2/EventsDetail/events_details_widget.dart';
-import 'package:campus2/SettingsPage/settings_page.dart';
+import 'package:campus2/ProfilePage/profile_page.dart';
 import 'package:campus2/theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -87,7 +87,7 @@ class _EventsList extends State<EventsList> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const SettingsPage()));
+                              builder: (context) => const ProfilePage()));
                     },
                   ),
                   ListTile(
