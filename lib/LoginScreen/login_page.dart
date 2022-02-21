@@ -1,13 +1,16 @@
 // import 'package:campus2/Auth/components/ResetPassword/reset_password_screen.dart';
+
 import 'package:campus2/EventsList/events_list.dart';
 // import 'package:campus2/SettingsPage/settings_page.dart';
 import 'package:campus2/SignupScreen/Signup_method.dart';
+import 'package:campus2/SignupScreen/model/user_model.dart';
 // import 'package:campus2/SignupSuccessful/success_screen.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
   // const LoginPage({Key? key}) : super(key: key);
@@ -27,11 +30,14 @@ class LoginPage extends StatelessWidget {
   String? errorMessage;
 
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserModel>(context);
+
     return StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (_, AsyncSnapshot<User?> snap) {
           if (snap.hasData) {
             if (snap.data != null) {
+              userProvider.getUserData();
               return EventsList();
             }
           }

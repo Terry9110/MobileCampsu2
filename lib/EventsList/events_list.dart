@@ -20,20 +20,21 @@ class _EventsList extends State<EventsList> {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       final provider = Provider.of<EventListModel>(context, listen: false);
       provider.getEventsList();
-      print('This is provider.event list ');
-      print(provider.eventsList);
+
+      // print('This is provider.event list ');
+      // print(provider.eventsList);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<EventListModel>(context);
-    print(provider.eventsList);
+    // print(provider.eventsList);
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       final provider = Provider.of<EventListModel>(context, listen: false);
       provider.getEventsList();
-      print('This is provider.event list ');
-      print(provider.eventsList);
+      // print('This is provider.event list ');
+      // print(provider.eventsList);
     });
     return SafeArea(
 

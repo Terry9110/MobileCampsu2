@@ -11,6 +11,8 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserModel>(context);
+
     User? user = FirebaseAuth.instance.currentUser;
     print(user);
 
@@ -94,11 +96,13 @@ class ProfilePage extends StatelessWidget {
                   const SizedBox(height: 20),
                   profileDetails(
                       fieldName: "UserName",
-                      value: FirebaseAuth.instance.currentUser!.displayName),
-                  profileDetails(fieldName: "First Name", value: "Annie"),
+                      value: userProvider.userName ?? " "),
+                  profileDetails(
+                      fieldName: "Full Name",
+                      value: userProvider.fullName ?? " "),
                   profileDetails(fieldName: "Last Name", value: "Larson"),
                   profileDetails(
-                      fieldName: "Email", value: "annie.larson@gmail.com"),
+                      fieldName: "Email", value: userProvider.email ?? ""),
                   const SizedBox(
                     height: 40,
                   ),

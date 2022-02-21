@@ -37,8 +37,8 @@ class EventListModel extends ChangeNotifier {
     Query? query;
 
     CollectionReference eventsRef = firestore.collection("Events");
-    print('This is event ref');
-    print(eventsRef);
+    // print('This is event ref');
+    // print(eventsRef);
     if (nextQuery == null) {
       query = eventsRef
           // .where("active", isEqualTo: true)
@@ -78,7 +78,7 @@ class EventListModel extends ChangeNotifier {
         }
       }
       if (snap.docs.isNotEmpty) {
-        print("No Elements");
+        // print("No Elements");
         nextQuery = eventsRef;
         // .where("active", isEqualTo: true)
         // .where("event_date", isGreaterThan: DateTime.now())
@@ -88,7 +88,7 @@ class EventListModel extends ChangeNotifier {
       setLoading(false);
       notifyListeners();
     }).catchError((e) {
-      print("Error from query");
+      // print("Error from query");
       print(e);
       setLoading(false);
       setErrorMessage(e.toString());
@@ -102,16 +102,16 @@ class EventListModel extends ChangeNotifier {
     Query? query;
 
     CollectionReference eventsRef = firestore.collection("Events");
-    print('This is event ref');
-    print(eventsRef);
+    // print('This is event ref');
+    // print(eventsRef);
     if (nextQuery == null) {
       query = eventsRef
           .where("active", isEqualTo: true)
           // .where("event_date", isGreaterThan: DateTime.now())
           .orderBy("event_date")
           .limit(25);
-      print('This is query');
-      print(query);
+      // print('This is query');
+      // print(query);
     } else {
       query = nextQuery;
     }
