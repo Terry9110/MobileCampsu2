@@ -9,38 +9,66 @@ class UserModel extends ChangeNotifier {
   String? email;
   String? fullName;
   String? userName;
+  String? phoneNumber;
 
-  UserModel({this.uid, this.email, this.fullName, this.userName});
+  UserModel(
+      {this.uid, this.email, this.fullName, this.userName, this.phoneNumber});
 
   // receiving data from server
   factory UserModel.fromMap(map) {
     return UserModel(
-      uid: map['uid'],
-      email: map['email'],
-      fullName: map['fullName'],
-      userName: map['userName'],
-    );
+        uid: map['uid'],
+        email: map['email'],
+        fullName: map['fullName'],
+        userName: map['userName'],
+        phoneNumber: map['phoneNumber']);
   }
 
   getUser() async {
     FirebaseAuth auth = FirebaseAuth.instance;
 
     String uid = auth.currentUser!.uid.toString();
-
-    return await _db
+    // print('this is UID!!!');
+    // print(uid);
+    var response = await _db
         .collection('users')
         .where('uid', isEqualTo: uid)
-        .limit(1)
+        // .limit(1)
         .get();
+    // .limit(1)
+    // .get();
+    // .snapshots();
+    // if (response.)
+    print('this is response');
+    // print(response.take(1));
+    return response;
   }
 
   getUserData() async {
-    var res = await getUser();
-    print(res);
-    uid = res['uid'];
-    email = res['email'];
-    fullName = res['fullName'];
-    userName = res['userName'];
+    getUser().then((querySnapshot) {
+      print('THIS IS QUERY SNAPSHOT');
+      print(querySnapshot);
+      querySnapshot.docs.forEach((result) {
+        print('THIS IS RESULT.DATA');
+        print(result.data());
+        print('this is res');
+        var res = result.data();
+        print(res['uid']);
+        uid = res['uid'];
+        email = res['email'];
+        fullName = res['firstName'];
+        userName = res['userName'];
+        phoneNumber = res['phoneNumber'];
+        notifyListeners();
+      });
+    });
+
+    // print('this is res');
+    // print(res['uid']);
+    // uid = res['uid'];
+    // email = res['email'];
+    // fullName = res['fullName'];
+    // userName = res['userName'];
     notifyListeners();
   }
 

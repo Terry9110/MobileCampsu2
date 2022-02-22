@@ -100,7 +100,9 @@ class ProfilePage extends StatelessWidget {
                   profileDetails(
                       fieldName: "Full Name",
                       value: userProvider.fullName ?? " "),
-                  profileDetails(fieldName: "Last Name", value: "Larson"),
+                  profileDetails(
+                      fieldName: "Phone Number",
+                      value: userProvider.phoneNumber ?? " "),
                   profileDetails(
                       fieldName: "Email", value: userProvider.email ?? ""),
                   const SizedBox(
