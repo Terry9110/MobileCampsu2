@@ -1,4 +1,5 @@
 // import 'package:campsu/theme.dart';
+import 'package:campus2/checkoutPage/checkout_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -40,7 +41,10 @@ class _EventsPage extends State<EventsPage> {
               margin: const EdgeInsets.only(left: 30),
               child: InkWell(
                   onTap: () {
-                    Navigator.pushNamed(context, "/checkout");
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => CheckoutPage()));
                   },
                   child: Container(
                     height: 50,
