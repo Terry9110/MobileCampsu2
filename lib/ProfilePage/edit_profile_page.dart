@@ -1,3 +1,4 @@
+import 'package:campus2/ProfilePage/profile_page.dart';
 import 'package:campus2/SignupScreen/model/signupModel.dart';
 import 'package:campus2/SignupScreen/model/user_model.dart';
 import 'package:campus2/SignupSuccessful/success_screen.dart';
@@ -11,11 +12,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class EditProfilePage extends StatefulWidget {
-  const EditProfilePage({ Key? key }) : super(key: key);
-
   @override
   _EditProfilePageState createState() => _EditProfilePageState();
 }
+
 final _auth = FirebaseAuth.instance;
 
 // string for displaying the error Message
@@ -25,16 +25,40 @@ String? errorMessage;
 final _formKey = GlobalKey<FormState>();
 
 //editing Controller
-final fullNameEditingController = new TextEditingController();
-final emailEditingController = new TextEditingController();
-final userNameEditingController = new TextEditingController();
+TextEditingController? fullNameEditingController;
+TextEditingController? emailEditingController;
+TextEditingController? userNameEditingController;
 final passwordEditingController = new TextEditingController();
 final dateOfBirthEditingController = new TextEditingController();
-final phoneNumberEditingController = new TextEditingController();
+TextEditingController? phoneNumberEditingController;
 
 class _EditProfilePageState extends State<EditProfilePage> {
-   @override
+  @override
+  void initState() {
+    fullNameEditingController = TextEditingController();
+    emailEditingController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    final userProvider = Provider.of<UserModel>(context);
+    fullNameEditingController!.text = userProvider.fullName ?? " ";
+    emailEditingController!.text = userProvider.email ?? " ";
+    userNameEditingController!.text = userProvider.userName ?? " ";
+    phoneNumberEditingController!.text = userProvider.phoneNumber ?? " ";
+  }
+
+  @override
+  void dispose() {
+    fullNameEditingController!.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserModel>(context);
+
     //Full Name Field
     final fullNameField = TextFormField(
       autofocus: false,
@@ -51,7 +75,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         return null;
       },
       onSaved: (value) {
-        fullNameEditingController.text = value!;
+        fullNameEditingController!.text = value!;
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
@@ -94,7 +118,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         return null;
       },
       onSaved: (value) {
-        fullNameEditingController.text = value!;
+        fullNameEditingController!.text = value!;
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
@@ -131,7 +155,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       //  },
 
       onSaved: (value) {
-        fullNameEditingController.text = value!;
+        fullNameEditingController!.text = value!;
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
@@ -175,7 +199,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       },
 
       onSaved: (value) {
-        fullNameEditingController.text = value!;
+        fullNameEditingController!.text = value!;
       },
       textInputAction: TextInputAction.done,
       decoration: InputDecoration(
@@ -212,7 +236,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       //  },
 
       onSaved: (value) {
-        fullNameEditingController.text = value!;
+        fullNameEditingController!.text = value!;
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
@@ -247,10 +271,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
         height: 50,
         minWidth: MediaQuery.of(context).size.width,
         onPressed: () {
-          signUp(emailEditingController.text, passwordEditingController.text,
+          signUp(emailEditingController!.text, passwordEditingController.text,
               context);
         },
-        child: Text('Sign Up',
+        child: Text('Update Profile',
             style: GoogleFonts.poppins(
                 fontWeight: FontWeight.w600,
                 color: Colors.white,
@@ -283,35 +307,35 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const SizedBox(height: 40),
-                    Text("Create Account,",
+                    Text("EDIT PROFILE,",
                         style: GoogleFonts.poppins(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
                             fontSize: 24)),
-                    Text("Sign Up To Get Started!",
+                    Text("This is where you can edit profile!",
                         style: GoogleFonts.poppins(
                             color: Colors.grey[500], fontSize: 18)),
                     fullNameField,
                     const SizedBox(height: 20),
                     userNameField,
                     const SizedBox(height: 20),
-                    emailAddressField,
-                    const SizedBox(height: 20),
-                    passwordField,
-                    const SizedBox(height: 20),
+                    // emailAddressField,
+                    // const SizedBox(height: 20),
+                    // passwordField,
+                    // const SizedBox(height: 20),
                     phoneNumberField,
                     genderPicker(context),
                     const SizedBox(height: 20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                            width: MediaQuery.of(context).size.width - 90,
-                            child: Text(
-                                "By proceeding you also agree to the Terms of Service and Privacy Policy",
-                                style:
-                                    GoogleFonts.poppins(color: Colors.grey))),
+                      children: const [
+                        // SizedBox(
+                        //     width: MediaQuery.of(context).size.width - 90,
+                        //     child: Text(
+                        //         "By proceeding you also agree to the Terms of Service and Privacy Policy",
+                        //         style:
+                        //             GoogleFonts.poppins(color: Colors.grey))),
                       ],
                     ),
                     const SizedBox(height: 20),
@@ -411,6 +435,7 @@ postDetailsToFirestore(context) async {
   // calling our firestore
   // calling our user model
   // sedning these values
+  final userProvider = Provider.of<UserModel>(context);
 
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
   User? user = _auth.currentUser;
@@ -420,18 +445,18 @@ postDetailsToFirestore(context) async {
   // writing all the values
   userModel.email = user!.email;
   userModel.uid = user.uid;
-  userModel.fullName = fullNameEditingController.text;
-  userModel.userName = userNameEditingController.text;
-  userModel.phoneNumber = phoneNumberEditingController.text;
+  userModel.fullName = fullNameEditingController!.text;
+  userModel.userName = userNameEditingController!.text;
+  userModel.phoneNumber = phoneNumberEditingController!.text;
 
   await firebaseFirestore
       .collection("users")
       .doc(user.uid)
-      .set(userModel.toMap());
-  Fluttertoast.showToast(msg: "Account created successfully :) ");
+      .update(userModel.toMap());
+  Fluttertoast.showToast(msg: "Account Updated Successfully:) ");
 
-  Navigator.pushAndRemoveUntil(
-      (context),
-      MaterialPageRoute(builder: (context) => SignupSuccess()),
-      (route) => false);
+  userProvider.getUserData();
+
+  Navigator.pushAndRemoveUntil((context),
+      MaterialPageRoute(builder: (context) => ProfilePage()), (route) => false);
 }

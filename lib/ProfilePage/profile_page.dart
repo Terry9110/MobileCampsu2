@@ -41,7 +41,7 @@ class ProfilePage extends StatelessWidget {
             icon: const Icon(Icons.edit),
             onPressed: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => EditProfilePage()));
+                  MaterialPageRoute(builder: (context) =>  EditProfilePage()));
             },
           )
         ],
