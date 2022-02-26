@@ -53,7 +53,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   @override
   void dispose() {
-    fullNameEditingController!.dispose();
+    // fullNameEditingController!.dispose();
     super.dispose();
   }
 
@@ -436,7 +436,7 @@ postDetailsToFirestore(context) async {
   // calling our firestore
   // calling our user model
   // sedning these values
-  final userProvider = Provider.of<UserModel>(context);
+  final userProvider = Provider.of<UserModel>(context, listen: false);
 
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
   User? user = _auth.currentUser;
