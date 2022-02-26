@@ -25,25 +25,27 @@ String? errorMessage;
 final _formKey = GlobalKey<FormState>();
 
 //editing Controller
-TextEditingController? fullNameEditingController;
-TextEditingController? emailEditingController;
-TextEditingController? userNameEditingController;
+TextEditingController fullNameEditingController = new TextEditingController();
+TextEditingController emailEditingController = new TextEditingController();
+TextEditingController userNameEditingController = new TextEditingController();
 final passwordEditingController = new TextEditingController();
 final dateOfBirthEditingController = new TextEditingController();
-TextEditingController? phoneNumberEditingController;
+TextEditingController phoneNumberEditingController =
+    new TextEditingController();
 
 class _EditProfilePageState extends State<EditProfilePage> {
   @override
   void initState() {
-    fullNameEditingController = TextEditingController();
-    emailEditingController = TextEditingController();
+    // fullNameEditingController = TextEditingController();
+    // emailEditingController = TextEditingController();
     super.initState();
   }
 
   @override
   void didChangeDependencies() {
     final userProvider = Provider.of<UserModel>(context);
-    fullNameEditingController!.text = userProvider.fullName ?? " ";
+    fullNameEditingController.value =
+        TextEditingValue(text: userProvider.fullName ?? " ");
     emailEditingController!.text = userProvider.email ?? " ";
     userNameEditingController!.text = userProvider.userName ?? " ";
     phoneNumberEditingController!.text = userProvider.phoneNumber ?? " ";
@@ -61,7 +63,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
     //Full Name Field
     final fullNameField = TextFormField(
-      autofocus: false,
+      // autofocus: false,
       controller: fullNameEditingController,
       keyboardType: TextInputType.name,
       validator: (value) {
@@ -265,14 +267,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
     final signUpButton = Material(
       elevation: 5,
-      color: Color(0xFF006633),
+      color: const Color(0xFF006633),
       borderRadius: BorderRadius.circular(15),
       child: MaterialButton(
         height: 50,
         minWidth: MediaQuery.of(context).size.width,
         onPressed: () {
-          signUp(emailEditingController!.text, passwordEditingController.text,
-              context);
+          postDetailsToFirestore(context);
         },
         child: Text('Update Profile',
             style: GoogleFonts.poppins(
