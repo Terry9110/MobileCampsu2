@@ -45,6 +45,8 @@ class UserModel extends ChangeNotifier {
   }
 
   getUserData() async {
+    var authenticatedUser = FirebaseAuth.instance;
+
     getUser().then((querySnapshot) {
       print('THIS IS QUERY SNAPSHOT');
       print(querySnapshot);
@@ -56,7 +58,7 @@ class UserModel extends ChangeNotifier {
         print(res['uid']);
         uid = res['uid'];
         email = res['email'];
-        fullName = res['firstName'];
+        fullName = res['fullName'];
         userName = res['userName'];
         phoneNumber = res['phoneNumber'];
         notifyListeners();
@@ -79,6 +81,7 @@ class UserModel extends ChangeNotifier {
       'email': email,
       'fullName': fullName,
       'userName': userName,
+      'phoneNumber': phoneNumber
     };
   }
 }

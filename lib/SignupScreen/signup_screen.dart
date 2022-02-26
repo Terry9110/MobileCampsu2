@@ -429,6 +429,7 @@ postDetailsToFirestore(context) async {
   userModel.uid = user.uid;
   userModel.fullName = fullNameEditingController.text;
   userModel.userName = userNameEditingController.text;
+  userModel.phoneNumber = phoneNumberEditingController.text;
 
   await firebaseFirestore
       .collection("users")
