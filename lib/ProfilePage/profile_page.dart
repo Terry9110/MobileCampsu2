@@ -1,3 +1,4 @@
+import 'package:campus2/ProfilePage/edit_profile_page.dart';
 import 'package:campus2/SignupScreen/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -24,17 +25,27 @@ class ProfilePage extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: Color(0xFF006633),
-          elevation: 0,
-          leading: IconButton(
-            icon: const Icon(
-              Icons.arrow_back,
-              color: Colors.white,
-            ),
+        backgroundColor: Color(0xFF006633),
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.edit),
             onPressed: () {
-              Navigator.of(context).pop();
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => EditProfilePage()));
             },
-          )),
+          )
+        ],
+      ),
       body: Stack(
         children: [
           Container(
