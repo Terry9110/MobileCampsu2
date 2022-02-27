@@ -2,6 +2,7 @@ import 'package:campus2/EventsDetail/model/event_list_model.dart';
 import 'package:campus2/LoginScreen/login_page.dart';
 
 import 'package:campus2/ProfilePage/profile_page.dart';
+import 'package:campus2/StripePayment/sample_stripe_button.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,22 +23,23 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => SignupModel()),
-        ChangeNotifierProvider(create: (context) => EventListModel()),
-        ChangeNotifierProvider(create: (context) => UserModel()),
+        providers: [
+          ChangeNotifierProvider(create: (context) => SignupModel()),
+          ChangeNotifierProvider(create: (context) => EventListModel()),
+          ChangeNotifierProvider(create: (context) => UserModel()),
 
-        // ChangeNotifierProvider(create: (context) => LoginModel()),
-      ],
-      child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          // navigatorKey: globalNav.navigatorKey,
-          title: 'Flutter Demo',
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-          ),
-          home: LoginPage()),
-    );
+          // ChangeNotifierProvider(create: (context) => LoginModel()),
+        ],
+        child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            // navigatorKey: globalNav.navigatorKey,
+            title: 'Flutter Demo',
+            theme: ThemeData(
+              primarySwatch: Colors.blue,
+            ),
+            home: const StripeButton())
+        // home: LoginPage()),
+        );
     // return MaterialApp(
     //   debugShowCheckedModeBanner: false,
     //   title: 'Flutter Demo',
