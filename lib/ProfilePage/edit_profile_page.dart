@@ -46,9 +46,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
     final userProvider = Provider.of<UserModel>(context);
     fullNameEditingController.value =
         TextEditingValue(text: userProvider.fullName ?? " ");
-    emailEditingController!.text = userProvider.email ?? " ";
-    userNameEditingController!.text = userProvider.userName ?? " ";
-    phoneNumberEditingController!.text = userProvider.phoneNumber ?? " ";
+    emailEditingController.text = userProvider.email ?? " ";
+    userNameEditingController.text = userProvider.userName ?? " ";
+    phoneNumberEditingController.text = userProvider.phoneNumber ?? " ";
   }
 
   @override
@@ -77,7 +77,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         return null;
       },
       onSaved: (value) {
-        fullNameEditingController!.text = value!;
+        fullNameEditingController.text = value!;
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
@@ -120,7 +120,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         return null;
       },
       onSaved: (value) {
-        fullNameEditingController!.text = value!;
+        fullNameEditingController.text = value!;
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
@@ -157,7 +157,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       //  },
 
       onSaved: (value) {
-        fullNameEditingController!.text = value!;
+        fullNameEditingController.text = value!;
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
@@ -201,7 +201,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       },
 
       onSaved: (value) {
-        fullNameEditingController!.text = value!;
+        fullNameEditingController.text = value!;
       },
       textInputAction: TextInputAction.done,
       decoration: InputDecoration(
@@ -238,7 +238,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       //  },
 
       onSaved: (value) {
-        fullNameEditingController!.text = value!;
+        fullNameEditingController.text = value!;
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(

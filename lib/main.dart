@@ -10,7 +10,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'SignupScreen/model/signupModel.dart';
 import 'SignupScreen/model/user_model.dart';
 
+
+
 Future<void> main() async {
+
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(const MyApp());

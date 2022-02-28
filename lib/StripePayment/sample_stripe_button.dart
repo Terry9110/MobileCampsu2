@@ -1,4 +1,9 @@
+import 'dart:convert';
+// import 'dart:html';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:http/http.dart' as http;
 
 class StripeButton extends StatefulWidget {
   const StripeButton({Key? key}) : super(key: key);
@@ -6,6 +11,7 @@ class StripeButton extends StatefulWidget {
   @override
   _StripeButtonState createState() => _StripeButtonState();
 }
+// Stripe.publishableKey = "YOUR_PUBLISHABLE_KEY";
 
 class _StripeButtonState extends State<StripeButton> {
   @override
@@ -28,7 +34,34 @@ class _StripeButtonState extends State<StripeButton> {
                 Color(0xFFf187fb),
               ])),
               child: TextButton(
-                onPressed: () {},
+                onPressed: () async {
+                  final url = Uri.parse(
+                      "https://us-central1-campsu-8f97d.cloudfunctions.net/stripePaymentTest");
+                  final response = await http.get(url);
+                  print(response.body);
+                  var jsonBody = jsonDecode(response.body);
+                  Map<String, dynamic>? paymentIntentData;
+                  paymentIntentData = jsonBody;
+                  if (paymentIntentData!["paymentIntent"] != "" &&
+                      paymentIntentData["paymentIntent"] != null) {
+                    String _intent = paymentIntentData["paymentIntent"];
+                    await Stripe.instance.initPaymentSheet(
+                      paymentSheetParameters: SetupPaymentSheetParameters(
+                        paymentIntentClientSecret: _intent,
+                        applePay: false,
+                        googlePay: false,
+                        merchantCountryCode: "IN",
+                        merchantDisplayName: "Test",
+                        testEnv: false,
+                        customerId: paymentIntentData['customer'],
+                        customerEphemeralKeySecret:
+                            paymentIntentData['ephemeralKey'],
+                      ),
+                    );
+
+                    await Stripe.instance.presentPaymentSheet();
+                  }
+                },
                 style: TextButton.styleFrom(
                     padding: const EdgeInsets.all(16.0),
                     primary: Colors.white,
