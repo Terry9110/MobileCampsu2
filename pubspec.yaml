@@ -55,6 +55,8 @@ dependencies:
   flutter_credit_card: ^3.0.1
   progress_dialog: ^1.2.4
   flutter_stripe: ^2.2.0
+  flutter_stripe_payment: ^0.0.17
+
 
 
 
