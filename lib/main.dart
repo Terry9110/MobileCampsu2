@@ -3,19 +3,21 @@ import 'package:campus2/LoginScreen/login_page.dart';
 
 import 'package:campus2/ProfilePage/profile_page.dart';
 import 'package:campus2/StripePayment/card_payment.dart';
+import 'package:campus2/StripePayment/dashboard_page.dart';
 import 'package:campus2/StripePayment/sample_stripe_button.dart';
+import 'package:campus2/StripePayment/stripe_again.dart';
 import 'package:campus2/StripePayment/stripe_checkout_example.dart';
 import 'package:campus2/StripePayment/stripe_sample.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
+// import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'SignupScreen/model/signupModel.dart';
 import 'SignupScreen/model/user_model.dart';
 
 Future<void> main() async {
-  Stripe.publishableKey = "pk_test_Ayd3jhtH1k1IrLqcGHoKDzJu";
+  // Stripe.publishableKey = "pk_test_Ayd3jhtH1k1IrLqcGHoKDzJu";
 
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -29,23 +31,24 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-        providers: [
-          ChangeNotifierProvider(create: (context) => SignupModel()),
-          ChangeNotifierProvider(create: (context) => EventListModel()),
-          ChangeNotifierProvider(create: (context) => UserModel()),
+      providers: [
+        ChangeNotifierProvider(create: (context) => SignupModel()),
+        ChangeNotifierProvider(create: (context) => EventListModel()),
+        ChangeNotifierProvider(create: (context) => UserModel()),
 
-          // ChangeNotifierProvider(create: (context) => LoginModel()),
-        ],
-        child: MaterialApp(
-            debugShowCheckedModeBanner: false,
-            // navigatorKey: globalNav.navigatorKey,
-            title: 'Flutter Demo',
-            theme: ThemeData(
-              primarySwatch: Colors.blue,
-            ),
-            home: const StripeCheckout())
-        // home: LoginPage()),
-        );
+        // ChangeNotifierProvider(create: (context) => LoginModel()),
+      ],
+      child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          // navigatorKey: globalNav.navigatorKey,
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          // home:  StirepPayment1())
+          home: DashboardScreen()),
+      // home: LoginPage()),
+    );
     // return MaterialApp(
     //   debugShowCheckedModeBanner: false,
     //   title: 'Flutter Demo',

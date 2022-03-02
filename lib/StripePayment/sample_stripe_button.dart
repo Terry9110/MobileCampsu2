@@ -1,173 +1,233 @@
-import 'dart:convert';
-// import 'dart:html';
+// import 'dart:convert';
+// import 'dart:io';
 
-import 'package:flutter/material.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
-import 'package:http/http.dart' as http;
+// import 'package:flutter/material.dart';
+// // import 'package:flutter_stripe_payment/flutter_stripe_payment.dart';
+// import 'package:stripe_payment/stripe_payment.dart';
 
-class StripeButton extends StatefulWidget {
-  const StripeButton({Key? key}) : super(key: key);
+// class StirepPayment1 extends StatefulWidget {
+//   @override
+//   _MyAppState createState() => _MyAppState();
+// }
 
-  @override
-  _StripeButtonState createState() => _StripeButtonState();
-}
+// class _MyAppState extends State<StirepPayment1> {
+//   Token? _paymentToken;
+//   PaymentMethod? _paymentMethod;
+//   String? _error;
 
-class _StripeButtonState extends State<StripeButton> {
-  Map<String, dynamic>? paymentIntentData;
+//   //this client secret is typically created by a backend system
+//   //check https://stripe.com/docs/payments/payment-intents#passing-to-client
+//   final String? _paymentIntentClientSecret = null;
 
-  @override
-  Widget build(BuildContext context) {
-    Stripe.publishableKey = "pk_test_Ayd3jhtH1k1IrLqcGHoKDzJu";
+//   PaymentIntentResult? _paymentIntent;
+//   Source? _source;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Stripe Payment'),
-      ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
-          child: SizedBox(
-            height: 60,
-            width: double.infinity,
-            child: Container(
-              decoration: const BoxDecoration(
-                  gradient:
-                      LinearGradient(transform: GradientRotation(20), colors: [
-                Color(0xFF439cfb),
-                Color(0xFFf187fb),
-              ])),
-              child: TextButton(
-                onPressed: () async {
-                  await makePayment();
+//   ScrollController _controller = ScrollController();
 
-                  // final url = Uri.parse(
-                  //     "https://us-central1-campsu-8f97d.cloudfunctions.net/stripePaymentTest");
-                  // final response = await http.get(url);
-                  // print(response.body);
-                  // var jsonBody = jsonDecode(response.body);
-                  // Map<String, dynamic>? paymentIntentData;
-                  // paymentIntentData = jsonBody;
-                  // if (paymentIntentData!["paymentIntent"] != "" &&
-                  //     paymentIntentData["paymentIntent"] != null) {
-                  //   String _intent = paymentIntentData["paymentIntent"];
-                  //   await Stripe.instance.initPaymentSheet(
-                  //     paymentSheetParameters: SetupPaymentSheetParameters(
-                  //       paymentIntentClientSecret: _intent,
-                  //       applePay: false,
-                  //       googlePay: false,
-                  //       merchantCountryCode: "IN",
-                  //       merchantDisplayName: "Test",
-                  //       testEnv: false,
-                  //       customerId: paymentIntentData['customer'],
-                  //       customerEphemeralKeySecret:
-                  //           paymentIntentData['ephemeralKey'],
-                  //     ),
-                  //   );
+//   final CreditCard testCard = CreditCard(
+//     number: '4000002760003184',
+//     expMonth: 12,
+//     expYear: 21,
+//     name: 'Test User',
+//     cvc: '133',
+//     addressLine1: 'Address 1',
+//     addressLine2: 'Address 2',
+//     addressCity: 'City',
+//     addressState: 'CA',
+//     addressZip: '1337',
+//   );
 
-                  //   await Stripe.instance.presentPaymentSheet();
-                  // }
-                },
-                style: TextButton.styleFrom(
-                    padding: const EdgeInsets.all(16.0),
-                    primary: Colors.white,
-                    textStyle: const TextStyle(fontSize: 20)),
-                child: const Text(
-                  'Stripe',
-                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+//   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
-  Future<void> makePayment() async {
-    try {
-      paymentIntentData =
-          await createPaymentIntent('20', 'USD'); //json.decode(response.body);
-      // print('Response body==>${response.body.toString()}');
-      await Stripe.instance
-          .initPaymentSheet(
-              paymentSheetParameters: SetupPaymentSheetParameters(
-                  paymentIntentClientSecret:
-                      paymentIntentData!['client_secret'],
-                  applePay: true,
-                  googlePay: true,
-                  testEnv: true,
-                  style: ThemeMode.dark,
-                  merchantCountryCode: 'US',
-                  merchantDisplayName: 'ANNIE'))
-          .then((value) {});
+//   @override
+//   initState() {
+//     super.initState();
 
-      ///now finally display payment sheeet
-      displayPaymentSheet();
-    } catch (e, s) {
-      print('exception:$e$s');
-    }
-  }
+//     StripePayment.setOptions(StripeOptions(
+//         publishableKey: "pk_test_Ayd3jhtH1k1IrLqcGHoKDzJu",
+//         merchantId: "Test",
+//         androidPayMode: 'test'));
+//   }
 
-  displayPaymentSheet() async {
-    try {
-      await Stripe.instance
-          .presentPaymentSheet(
-              parameters: PresentPaymentSheetParameters(
-        clientSecret: paymentIntentData!['client_secret'],
-        confirmPayment: true,
-      ))
-          .then((newValue) {
-        print('payment intent' + paymentIntentData!['id'].toString());
-        print(
-            'payment intent' + paymentIntentData!['client_secret'].toString());
-        print('payment intent' + paymentIntentData!['amount'].toString());
-        print('payment intent' + paymentIntentData.toString());
-        //orderPlaceApi(paymentIntentData!['id'].toString());
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("paid successfully")));
+//   void setError(dynamic error) {
+//     _scaffoldKey.currentState!
+//         .showSnackBar(SnackBar(content: Text(error.toString())));
+//     setState(() {
+//       _error = error.toString();
+//     });
+//   }
 
-        paymentIntentData = null;
-      }).onError((error, stackTrace) {
-        print('Exception/DISPLAYPAYMENTSHEET==> $error $stackTrace');
-      });
-    } on StripeException catch (e) {
-      print('Exception/DISPLAYPAYMENTSHEET==> $e');
-      showDialog(
-          context: context,
-          builder: (_) => AlertDialog(
-                content: Text("Cancelled "),
-              ));
-    } catch (e) {
-      print('$e');
-    }
-  }
-
-  //  Future<Map<String, dynamic>>
-  createPaymentIntent(String amount, String currency) async {
-    try {
-      Map<String, dynamic> body = {
-        'amount': calculateAmount('20'),
-        'currency': currency,
-        'payment_method_types[]': 'card'
-      };
-      print(body);
-      var response = await http.post(
-          Uri.parse(
-              'https://us-central1-campsu-8f97d.cloudfunctions.net/stripePaymentTest'),
-          body: body,
-          headers: {
-            'Authorization': 'Bearer your token',
-            'Content-Type': 'application/x-www-form-urlencoded'
-          });
-      print('Create Intent reponse ===> ${response.body.toString()}');
-      return jsonDecode(response.body);
-    } catch (err) {
-      print('err charging user: ${err.toString()}');
-    }
-  }
-
-  calculateAmount(String amount) {
-    final a = (int.parse(amount)) * 100;
-    return a.toString();
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return new MaterialApp(
+//       home: new Scaffold(
+//         key: _scaffoldKey,
+//         appBar: new AppBar(
+//           title: new Text('Plugin example app'),
+//           actions: <Widget>[
+//             IconButton(
+//               icon: Icon(Icons.clear),
+//               onPressed: () {
+//                 setState(() {
+//                   _source = null;
+//                   _paymentIntent = null;
+//                   _paymentMethod = null;
+//                   _paymentToken = null;
+//                 });
+//               },
+//             )
+//           ],
+//         ),
+//         body: ListView(
+//           controller: _controller,
+//           padding: const EdgeInsets.all(20),
+//           children: <Widget>[
+//             RaisedButton(
+//               child: Text("Create Token with Card Form"),
+//               onPressed: () {
+//                 StripePayment.paymentRequestWithCardForm(
+//                         CardFormPaymentRequest())
+//                     .then((paymentMethod) {
+//                   _scaffoldKey.currentState!.showSnackBar(
+//                       SnackBar(content: Text('Received ${paymentMethod.id}')));
+//                   setState(() {
+//                     _paymentMethod = paymentMethod;
+//                   });
+//                 }).catchError(setError);
+//               },
+//             ),
+//             RaisedButton(
+//               child: Text("Create Payment Method with Card"),
+//               onPressed: () {
+//                 StripePayment.createPaymentMethod(
+//                   PaymentMethodRequest(
+//                     card: testCard,
+//                   ),
+//                 ).then((paymentMethod) {
+//                   _scaffoldKey.currentState!.showSnackBar(
+//                       SnackBar(content: Text('Received ${paymentMethod.id}')));
+//                   setState(() {
+//                     _paymentMethod = paymentMethod;
+//                   });
+//                 }).catchError(setError);
+//               },
+//             ),
+//             RaisedButton(
+//               child: Text("Create Payment Method with existing token"),
+//               onPressed: _paymentToken == null
+//                   ? null
+//                   : () {
+//                       StripePayment.createPaymentMethod(
+//                         PaymentMethodRequest(
+//                           card: CreditCard(
+//                             token: _paymentToken!.tokenId,
+//                           ),
+//                         ),
+//                       ).then((paymentMethod) {
+//                         _scaffoldKey.currentState!.showSnackBar(SnackBar(
+//                             content: Text('Received ${paymentMethod.id}')));
+//                         setState(() {
+//                           _paymentMethod = paymentMethod;
+//                         });
+//                       }).catchError(setError);
+//                     },
+//             ),
+//             Divider(),
+//             RaisedButton(
+//               child: Text("Confirm Payment Intent"),
+//               onPressed:
+//                   _paymentMethod == null || _paymentIntentClientSecret == null
+//                       ? null
+//                       : () {
+//                           StripePayment.confirmPaymentIntent(
+//                             PaymentIntent(
+//                               clientSecret: _paymentIntentClientSecret,
+//                               paymentMethodId: _paymentMethod!.id,
+//                             ),
+//                           ).then((paymentIntent) {
+//                             _scaffoldKey.currentState!.showSnackBar(SnackBar(
+//                                 content: Text(
+//                                     'Received ${paymentIntent.paymentIntentId}')));
+//                             setState(() {
+//                               _paymentIntent = paymentIntent;
+//                             });
+//                           }).catchError(setError);
+//                         },
+//             ),
+//             RaisedButton(
+//               child: Text(
+//                 "Confirm Payment Intent with saving payment method",
+//                 textAlign: TextAlign.center,
+//               ),
+//               onPressed:
+//                   _paymentMethod == null || _paymentIntentClientSecret == null
+//                       ? null
+//                       : () {
+//                           StripePayment.confirmPaymentIntent(
+//                             PaymentIntent(
+//                               clientSecret: _paymentIntentClientSecret,
+//                               paymentMethodId: _paymentMethod!.id!,
+//                               isSavingPaymentMethod: true,
+//                             ),
+//                           ).then((paymentIntent) {
+//                             _scaffoldKey.currentState?.showSnackBar(SnackBar(
+//                                 content: Text(
+//                                     'Received ${paymentIntent.paymentIntentId}')));
+//                             setState(() {
+//                               _paymentIntent = paymentIntent;
+//                             });
+//                           }).catchError(setError);
+//                         },
+//             ),
+//             RaisedButton(
+//               child: Text("Authenticate Payment Intent"),
+//               onPressed: _paymentIntentClientSecret == null
+//                   ? null
+//                   : () {
+//                       StripePayment.authenticatePaymentIntent(
+//                               clientSecret: _paymentIntentClientSecret!)
+//                           .then((paymentIntent) {
+//                         _scaffoldKey.currentState!.showSnackBar(SnackBar(
+//                             content: Text(
+//                                 'Received ${paymentIntent.paymentIntentId}')));
+//                         setState(() {
+//                           _paymentIntent = paymentIntent;
+//                         });
+//                       }).catchError(setError);
+//                     },
+//             ),
+//             Divider(),
+//             Text('Current source:'),
+//             Text(
+//               JsonEncoder.withIndent('  ').convert(_source?.toJson() ?? {}),
+//               style: TextStyle(fontFamily: "Monospace"),
+//             ),
+//             Divider(),
+//             Text('Current token:'),
+//             Text(
+//               JsonEncoder.withIndent('  ')
+//                   .convert(_paymentToken?.toJson() ?? {}),
+//               style: TextStyle(fontFamily: "Monospace"),
+//             ),
+//             Divider(),
+//             Text('Current payment method:'),
+//             Text(
+//               JsonEncoder.withIndent('  ')
+//                   .convert(_paymentMethod?.toJson() ?? {}),
+//               style: TextStyle(fontFamily: "Monospace"),
+//             ),
+//             Divider(),
+//             Text('Current payment intent:'),
+//             Text(
+//               JsonEncoder.withIndent('  ')
+//                   .convert(_paymentIntent?.toJson() ?? {}),
+//               style: TextStyle(fontFamily: "Monospace"),
+//             ),
+//             Divider(),
+//             Text('Current error: $_error'),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
