@@ -17,6 +17,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     Stripe.publishableKey = "pk_test_Ayd3jhtH1k1IrLqcGHoKDzJu";
+    Stripe.merchantIdentifier = 'any string works';
+    Stripe.instance.applySettings();
 
     return Scaffold(
       body: Center(
@@ -72,5 +74,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
     } catch (e) {
       print(e);
     }
+    
   }
 }

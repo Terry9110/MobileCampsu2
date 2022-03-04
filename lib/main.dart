@@ -10,6 +10,7 @@ import 'package:campus2/StripePayment/stripe_checkout_example.dart';
 import 'package:campus2/StripePayment/stripe_sample.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 // import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -20,6 +21,9 @@ Future<void> main() async {
   // Stripe.publishableKey = "pk_test_Ayd3jhtH1k1IrLqcGHoKDzJu";
 
   WidgetsFlutterBinding.ensureInitialized();
+  Stripe.publishableKey = 'pk_test_Ayd3jhtH1k1IrLqcGHoKDzJu';
+  Stripe.merchantIdentifier = 'any string works';
+  await Stripe.instance.applySettings();
   await Firebase.initializeApp();
   runApp(const MyApp());
 }
@@ -46,7 +50,7 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.blue,
           ),
           // home:  StirepPayment1())
-          home: DashboardScreen()),
+          home: LoginPage()),
       // home: LoginPage()),
     );
     // return MaterialApp(
