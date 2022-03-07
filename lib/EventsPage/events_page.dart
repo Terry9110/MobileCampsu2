@@ -2,6 +2,10 @@
 import 'package:campus2/checkoutPage/checkout_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 
 import '../theme.dart';
 
@@ -28,11 +32,16 @@ class EventsPage extends StatefulWidget {
   @override
   State<EventsPage> createState() => _EventsPage();
 }
+  Map<String, dynamic>? paymentIntentData;
+
 
 class _EventsPage extends State<EventsPage> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
+    Stripe.publishableKey = "pk_test_Ayd3jhtH1k1IrLqcGHoKDzJu";
+    Stripe.merchantIdentifier = 'any string works';
+    Stripe.instance.applySettings();
     return SafeArea(
         top: true,
         bottom: true,
@@ -41,10 +50,11 @@ class _EventsPage extends State<EventsPage> {
               margin: const EdgeInsets.only(left: 30),
               child: InkWell(
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => CheckoutPage()));
+                     makePayment();
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (context) => CheckoutPage()));
                   },
                   child: Container(
                     height: 50,
@@ -130,7 +140,7 @@ class _EventsPage extends State<EventsPage> {
                           flex: 2,
                           child: Container(
                             height: 50,
-                            decoration: const BoxDecoration(
+                            decoration:  BoxDecoration(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10)),
                                 image: DecorationImage(
@@ -266,7 +276,7 @@ class _EventsPage extends State<EventsPage> {
                           children: [
                             Padding(
                                 padding: const EdgeInsets.only(top: 5),
-                                child: Text(widget.date,
+                                child: Text(widget.date.toString(),
                                   // "Sun , 20 August 2020",
                                     style: GoogleFonts.poppins(
                                         color: Colors.black,
@@ -344,7 +354,7 @@ class _EventsPage extends State<EventsPage> {
                           children: [
                             Padding(
                                 padding: const EdgeInsets.only(top: 5),
-                                child: Text(widget.totalViews,
+                                child: Text(widget.totalViews.toString(),
                                     style: GoogleFonts.poppins(
                                         color: Colors.black,
                                         fontSize: 12,
@@ -377,5 +387,50 @@ class _EventsPage extends State<EventsPage> {
             ],
           ),
         ));
+  }
+  Future<void> makePayment() async {
+    final url = Uri.parse(
+        'https://us-central1-campsu-8f97d.cloudfunctions.net/stripePayment');
+
+    final response =
+        await http.get(url, headers: {'Content-Type': 'application/json'});
+
+    paymentIntentData = json.decode(response.body);
+    print('this is payment intent data');
+    print(paymentIntentData?.entries);
+    print('this is response.body');
+    print(response.body);
+
+    await Stripe.instance.initPaymentSheet(
+        paymentSheetParameters: SetupPaymentSheetParameters(
+      paymentIntentClientSecret: paymentIntentData!['paymentIntent'],
+      applePay: true,
+      googlePay: true,
+      style: ThemeMode.dark,
+      merchantCountryCode: 'US',
+      merchantDisplayName: 'Raja',
+      
+    ));
+
+    setState(() {
+      displayPaymentSheet();
+    });
+  }
+
+  Future<void> displayPaymentSheet() async {
+    try {
+      await Stripe.instance.presentPaymentSheet(
+          parameters: PresentPaymentSheetParameters(
+              clientSecret: paymentIntentData!['paymentIntent'],
+              confirmPayment: true));
+      setState(() {
+        paymentIntentData = null;
+      });
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('Paid Successfully')));
+    } catch (e) {
+      print(e);
+    }
+    
   }
 }
