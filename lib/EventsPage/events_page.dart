@@ -136,7 +136,9 @@ class _EventsPage extends State<EventsPage> {
                                 image: DecorationImage(
                                     fit: BoxFit.fill,
                                     image: NetworkImage(
-                                        "https://cdn.dribbble.com/users/2398989/screenshots/6597610/presentation_dark2.jpg"))),
+                                       widget.imageUrl
+                                        // "https://cdn.dribbble.com/users/2398989/screenshots/6597610/presentation_dark2.jpg"
+                                        ))),
                           ),
                         ),
                         const SizedBox(width: 20),
@@ -184,7 +186,8 @@ class _EventsPage extends State<EventsPage> {
                       ],
                     ),
                     const SizedBox(height: 30),
-                    Text("Camp Event with company",
+                    Text(widget.eventName,
+                      // "Camp Event with company",
                         style: GoogleFonts.poppins(
                             color: Colors.black,
                             fontWeight: FontWeight.w600,
@@ -263,7 +266,8 @@ class _EventsPage extends State<EventsPage> {
                           children: [
                             Padding(
                                 padding: const EdgeInsets.only(top: 5),
-                                child: Text("Sun , 20 August 2020",
+                                child: Text(widget.date,
+                                  // "Sun , 20 August 2020",
                                     style: GoogleFonts.poppins(
                                         color: Colors.black,
                                         fontSize: 12,
@@ -292,7 +296,9 @@ class _EventsPage extends State<EventsPage> {
                               image: DecorationImage(
                                   fit: BoxFit.fill,
                                   image: NetworkImage(
-                                      "https://cdn.wccftech.com/wp-content/uploads/2017/03/Google-Maps.jpg"))),
+                                      
+                                      "https://cdn.wccftech.com/wp-content/uploads/2017/03/Google-Maps.jpg"
+                                      ))),
                         ),
                         const SizedBox(width: 20),
                         Column(
@@ -307,7 +313,7 @@ class _EventsPage extends State<EventsPage> {
                                         fontSize: 12,
                                         fontWeight: FontWeight.w600))),
                             const SizedBox(height: 5),
-                            Text("Three miles island, London , UK",
+                            Text(widget.place,
                                 style: GoogleFonts.poppins(
                                     color: Colors.grey[400],
                                     fontSize: 10,
@@ -338,7 +344,7 @@ class _EventsPage extends State<EventsPage> {
                           children: [
                             Padding(
                                 padding: const EdgeInsets.only(top: 5),
-                                child: Text("55 Tickets",
+                                child: Text(widget.totalViews,
                                     style: GoogleFonts.poppins(
                                         color: Colors.black,
                                         fontSize: 12,

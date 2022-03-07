@@ -35,6 +35,30 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>This App does not need access to bluetooth.</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>This App does not need access to bluetooth.</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>This app does not access your calendars.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Campus App needs access to your phone camera for you to take photos and make videos to publish on the app</string>
+	<key>NSContactsUsageDescription</key>
+	<string>This app does not need access to your contacts.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Campus App needs access to your location while the app is in use to know locations of events</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Campus App needs access to your location while the app is in use to know locations of events</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Campus  App needs access to your mic to help your record voice notes on chat/message conversations</string>
+	<key>NSMotionUsageDescription</key>
+	<string>Campus App does not access motion.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Campus App Allows you to capture your best moment</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Campus App Allows you to capture your best moment</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Campus App app does not access speech recognition.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -56,29 +80,5 @@
 	<true/>
 	<key>kTCCServiceMediaLibrary</key>
 	<string>This app does not access your music</string>
-	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>This App does not need access to bluetooth.</string>
-	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>This App does not need access to bluetooth.</string>
-	<key>NSCalendarsUsageDescription</key>
-	<string>This app does not access your calendars.</string>
-	<key>NSCameraUsageDescription</key>
-	<string>Campus App needs access to your phone camera for you to take photos and make videos to publish on the app</string>
-	<key>NSContactsUsageDescription</key>
-	<string>This app does not need access to your contacts.</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Campus App needs access to your location while the app is in use to know locations of events</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Campus App needs access to your location while the app is in use to know locations of events</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Campus  App needs access to your mic to help your record voice notes on chat/message conversations</string>
-	<key>NSMotionUsageDescription</key>
-	<string>Campus App does not access motion.</string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Campus App Allows you to capture your best moment</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Campus App Allows you to capture your best moment</string>
-	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>Campus App app does not access speech recognition.</string>
 </dict>
 </plist>
