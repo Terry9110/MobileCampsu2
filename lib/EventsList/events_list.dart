@@ -123,6 +123,7 @@ class _EventsList extends State<EventsList> {
                           totalInterested: event["total_interested"],
                           totalViews: event["total_views"],
                           organizerName: event["organizer_name"],
+                          ticketPrice: event['ticket_price'],
                         ),
                       Visibility(
                           visible: provider.isLoading,

@@ -13,7 +13,8 @@ class EventDetails extends StatefulWidget {
       required this.place,
       required this.totalInterested,
       required this.organizerName,
-      required this.totalViews})
+      required this.totalViews,
+      required this.ticketPrice})
       : super(key: key);
   final String imageUrl;
   final String eventName;
@@ -23,6 +24,7 @@ class EventDetails extends StatefulWidget {
   final int totalInterested;
   final int totalViews;
   final String organizerName;
+  final int ticketPrice;
   @override
   State<EventDetails> createState() => _EventDetails();
 }
@@ -44,6 +46,7 @@ class _EventDetails extends State<EventDetails> {
                         totalInterested: widget.totalInterested,
                         totalViews: widget.totalViews,
                         organizerName: widget.organizerName,
+                        ticketPrice: widget.ticketPrice,
                       )));
         },
         child: Container(

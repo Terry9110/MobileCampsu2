@@ -6,7 +6,6 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-
 import '../theme.dart';
 
 class EventsPage extends StatefulWidget {
@@ -19,7 +18,8 @@ class EventsPage extends StatefulWidget {
       required this.place,
       required this.totalInterested,
       required this.totalViews,
-      required this.organizerName})
+      required this.organizerName,
+      required this.ticketPrice})
       : super(key: key);
   final String imageUrl;
   final String eventName;
@@ -29,11 +29,12 @@ class EventsPage extends StatefulWidget {
   final int totalInterested;
   final int totalViews;
   final String organizerName;
+  final int ticketPrice;
   @override
   State<EventsPage> createState() => _EventsPage();
 }
-  Map<String, dynamic>? paymentIntentData;
 
+Map<String, dynamic>? paymentIntentData;
 
 class _EventsPage extends State<EventsPage> {
   @override
@@ -50,7 +51,7 @@ class _EventsPage extends State<EventsPage> {
               margin: const EdgeInsets.only(left: 30),
               child: InkWell(
                   onTap: () {
-                     makePayment();
+                    makePayment(widget.ticketPrice);
                     // Navigator.push(
                     //     context,
                     //     MaterialPageRoute(
@@ -140,13 +141,12 @@ class _EventsPage extends State<EventsPage> {
                           flex: 2,
                           child: Container(
                             height: 50,
-                            decoration:  BoxDecoration(
+                            decoration: BoxDecoration(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10)),
                                 image: DecorationImage(
                                     fit: BoxFit.fill,
-                                    image: NetworkImage(
-                                       widget.imageUrl
+                                    image: NetworkImage(widget.imageUrl
                                         // "https://cdn.dribbble.com/users/2398989/screenshots/6597610/presentation_dark2.jpg"
                                         ))),
                           ),
@@ -197,7 +197,7 @@ class _EventsPage extends State<EventsPage> {
                     ),
                     const SizedBox(height: 30),
                     Text(widget.eventName,
-                      // "Camp Event with company",
+                        // "Camp Event with company",
                         style: GoogleFonts.poppins(
                             color: Colors.black,
                             fontWeight: FontWeight.w600,
@@ -277,7 +277,7 @@ class _EventsPage extends State<EventsPage> {
                             Padding(
                                 padding: const EdgeInsets.only(top: 5),
                                 child: Text(widget.date.toString(),
-                                  // "Sun , 20 August 2020",
+                                    // "Sun , 20 August 2020",
                                     style: GoogleFonts.poppins(
                                         color: Colors.black,
                                         fontSize: 12,
@@ -306,9 +306,7 @@ class _EventsPage extends State<EventsPage> {
                               image: DecorationImage(
                                   fit: BoxFit.fill,
                                   image: NetworkImage(
-                                      
-                                      "https://cdn.wccftech.com/wp-content/uploads/2017/03/Google-Maps.jpg"
-                                      ))),
+                                      "https://cdn.wccftech.com/wp-content/uploads/2017/03/Google-Maps.jpg"))),
                         ),
                         const SizedBox(width: 20),
                         Column(
@@ -388,12 +386,14 @@ class _EventsPage extends State<EventsPage> {
           ),
         ));
   }
-  Future<void> makePayment() async {
+
+  Future<void> makePayment(pay) async {
     final url = Uri.parse(
         'https://us-central1-campsu-8f97d.cloudfunctions.net/stripePayment');
 
-    final response =
-        await http.get(url, headers: {'Content-Type': 'application/json'});
+    final response = await http.post(url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'amount': pay * 100}));
 
     paymentIntentData = json.decode(response.body);
     print('this is payment intent data');
@@ -409,7 +409,6 @@ class _EventsPage extends State<EventsPage> {
       style: ThemeMode.dark,
       merchantCountryCode: 'US',
       merchantDisplayName: 'Raja',
-      
     ));
 
     setState(() {
@@ -431,6 +430,5 @@ class _EventsPage extends State<EventsPage> {
     } catch (e) {
       print(e);
     }
-    
   }
 }
