@@ -10,9 +10,15 @@ class UserModel extends ChangeNotifier {
   String? fullName;
   String? userName;
   String? phoneNumber;
+  String? imagePath;
 
   UserModel(
-      {this.uid, this.email, this.fullName, this.userName, this.phoneNumber});
+      {this.uid,
+      this.email,
+      this.fullName,
+      this.userName,
+      this.phoneNumber,
+      this.imagePath});
 
   // receiving data from server
   factory UserModel.fromMap(map) {
@@ -21,7 +27,8 @@ class UserModel extends ChangeNotifier {
         email: map['email'],
         fullName: map['fullName'],
         userName: map['userName'],
-        phoneNumber: map['phoneNumber']);
+        phoneNumber: map['phoneNumber'],
+        imagePath: map['imagePath']);
   }
 
   getUser() async {
@@ -61,6 +68,7 @@ class UserModel extends ChangeNotifier {
         fullName = res['fullName'];
         userName = res['userName'];
         phoneNumber = res['phoneNumber'];
+        imagePath = res['imagePath'];
         notifyListeners();
       });
     });
@@ -81,7 +89,8 @@ class UserModel extends ChangeNotifier {
       'email': email,
       'fullName': fullName,
       'userName': userName,
-      'phoneNumber': phoneNumber
+      'phoneNumber': phoneNumber,
+      'imagePath': imagePath
     };
   }
 }

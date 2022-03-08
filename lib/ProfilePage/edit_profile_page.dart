@@ -144,12 +144,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserModel>(context);
+    userProvider.getUserData();
     if (userProvider.fullName == null) {
       fullNameEditingController.text = userProvider.fullName!;
       emailEditingController.text = userProvider.email!;
       userNameEditingController.text = userProvider.userName!;
       phoneNumberEditingController.text = userProvider.phoneNumber!;
     }
+
+    print('this is user provider.fullname');
+    print(userProvider.fullName);
 
     //Full Name Field
     final fullNameField = TextField(
