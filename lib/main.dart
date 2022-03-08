@@ -1,13 +1,9 @@
 import 'package:campus2/EventsDetail/model/event_list_model.dart';
+import 'package:campus2/HistoryPage/history_page.dart';
 import 'package:campus2/LoginScreen/login_page.dart';
 
 import 'package:campus2/ProfilePage/profile_page.dart';
-import 'package:campus2/StripePayment/card_payment.dart';
-import 'package:campus2/StripePayment/dashboard_page.dart';
-import 'package:campus2/StripePayment/sample_stripe_button.dart';
-import 'package:campus2/StripePayment/stripe_again.dart';
-import 'package:campus2/StripePayment/stripe_checkout_example.dart';
-import 'package:campus2/StripePayment/stripe_sample.dart';
+
 
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
@@ -49,8 +45,8 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
-          home: LoginPage()),
-      // home: LoginPage()),
+          // home: HistoryPage()),
+      home: LoginPage()),
     );
     // return MaterialApp(
     //   debugShowCheckedModeBanner: false,

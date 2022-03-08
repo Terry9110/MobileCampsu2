@@ -16,40 +16,54 @@ class EditProfilePage extends StatefulWidget {
   _EditProfilePageState createState() => _EditProfilePageState();
 }
 
-final _auth = FirebaseAuth.instance;
+// final _auth = FirebaseAuth.instance;
 
-// string for displaying the error Message
-String? errorMessage;
+// // string for displaying the error Message
+// String? errorMessage;
 
-//our form key
-final _formKey = GlobalKey<FormState>();
+// //our form key
+// final _formKey = GlobalKey<FormState>();
 
-//editing Controller
-TextEditingController fullNameEditingController = new TextEditingController();
-TextEditingController emailEditingController = new TextEditingController();
-TextEditingController userNameEditingController = new TextEditingController();
-final passwordEditingController = new TextEditingController();
-final dateOfBirthEditingController = new TextEditingController();
-TextEditingController phoneNumberEditingController =
-    new TextEditingController();
+// //editing Controller
+// TextEditingController fullNameEditingController = new TextEditingController();
+// TextEditingController emailEditingController = new TextEditingController();
+// TextEditingController userNameEditingController = new TextEditingController();
+// final passwordEditingController = new TextEditingController();
+// final dateOfBirthEditingController = new TextEditingController();
+// TextEditingController phoneNumberEditingController =
+//     new TextEditingController();
 
 class _EditProfilePageState extends State<EditProfilePage> {
+  final _auth = FirebaseAuth.instance;
+
+// string for displaying the error Message
+  String? errorMessage;
+
+//our form key
+  final _formKey = GlobalKey<FormState>();
+
+//editing Controller
+  TextEditingController fullNameEditingController = new TextEditingController();
+  TextEditingController emailEditingController = new TextEditingController();
+  TextEditingController userNameEditingController = new TextEditingController();
+  final passwordEditingController = new TextEditingController();
+  final dateOfBirthEditingController = new TextEditingController();
+  TextEditingController phoneNumberEditingController =
+      new TextEditingController();
   @override
   void initState() {
-    // fullNameEditingController = TextEditingController();
-    // emailEditingController = TextEditingController();
     super.initState();
   }
 
-  @override
-  void didChangeDependencies() {
-    final userProvider = Provider.of<UserModel>(context);
-    fullNameEditingController.value =
-        TextEditingValue(text: userProvider.fullName ?? " ");
-    emailEditingController.text = userProvider.email ?? " ";
-    userNameEditingController.text = userProvider.userName ?? " ";
-    phoneNumberEditingController.text = userProvider.phoneNumber ?? " ";
-  }
+  // @override
+  // void didChangeDependencies() {
+  //   final userProvider = Provider.of<UserModel>(context);
+  //   fullNameEditingController.value =
+  //       TextEditingValue(text: userProvider.fullName ?? " ");
+  //   emailEditingController.text = userProvider.email ?? " ";
+  //   userNameEditingController.text = userProvider.userName ?? " ";
+  //   phoneNumberEditingController.text = userProvider.phoneNumber ?? " ";
+  // }
 
   @override
   void dispose() {
@@ -57,28 +71,104 @@ class _EditProfilePageState extends State<EditProfilePage> {
     super.dispose();
   }
 
+  postDetailsToFirestore(context) async {
+    // calling our firestore
+    // calling our user model
+    // sedning these values
+    final userProvider = Provider.of<UserModel>(context, listen: false);
+
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    User? user = _auth.currentUser;
+
+    UserModel userModel = UserModel();
+
+    // writing all the values
+    userModel.email = user!.email;
+    userModel.uid = user.uid;
+    userModel.fullName = fullNameEditingController.text;
+    userModel.userName = userNameEditingController.text;
+    userModel.phoneNumber = phoneNumberEditingController.text;
+
+    await firebaseFirestore
+        .collection("users")
+        .doc(user.uid)
+        .update(userModel.toMap());
+    Fluttertoast.showToast(msg: "Account Updated Successfully:) ");
+
+    userProvider.getUserData();
+
+    Navigator.pushAndRemoveUntil(
+        (context),
+        MaterialPageRoute(builder: (context) => ProfilePage()),
+        (route) => false);
+  }
+
+  void signUp(String email, String password, context) async {
+    if (_formKey.currentState!.validate()) {
+      try {
+        await _auth
+            .createUserWithEmailAndPassword(email: email, password: password)
+            .then((value) => {postDetailsToFirestore(context)})
+            .catchError((e) {
+          Fluttertoast.showToast(msg: e!.message);
+        });
+      } on FirebaseAuthException catch (error) {
+        switch (error.code) {
+          case "invalid-email":
+            errorMessage = "Your email address appears to be malformed.";
+            break;
+          case "wrong-password":
+            errorMessage = "Your password is wrong.";
+            break;
+          case "user-not-found":
+            errorMessage = "User with this email doesn't exist.";
+            break;
+          case "user-disabled":
+            errorMessage = "User with this email has been disabled.";
+            break;
+          case "too-many-requests":
+            errorMessage = "Too many requests";
+            break;
+          case "operation-not-allowed":
+            errorMessage = "Signing in with Email and Password is not enabled.";
+            break;
+          default:
+            errorMessage = "An undefined Error happened.";
+        }
+        Fluttertoast.showToast(msg: errorMessage!);
+        print(error.code);
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserModel>(context);
+    if (userProvider.fullName == null) {
+      fullNameEditingController.text = userProvider.fullName!;
+      emailEditingController.text = userProvider.email!;
+      userNameEditingController.text = userProvider.userName!;
+      phoneNumberEditingController.text = userProvider.phoneNumber!;
+    }
 
     //Full Name Field
-    final fullNameField = TextFormField(
+    final fullNameField = TextField(
       // autofocus: false,
       controller: fullNameEditingController,
       keyboardType: TextInputType.name,
-      validator: (value) {
-        RegExp regex = new RegExp(r'^.{3,}$');
-        if (value!.isEmpty) {
-          return ("First Name cannot be Empty");
-        }
-        if (!regex.hasMatch(value)) {
-          return ("Enter Valid name(Min. 3 Character)");
-        }
-        return null;
-      },
-      onSaved: (value) {
-        fullNameEditingController.text = value!;
-      },
+      // validator: (value) {
+      //   RegExp regex = new RegExp(r'^.{3,}$');
+      //   if (value!.isEmpty) {
+      //     return ("First Name cannot be Empty");
+      //   }
+      //   if (!regex.hasMatch(value)) {
+      //     return ("Enter Valid name(Min. 3 Character)");
+      //   }
+      //   return null;
+      // },
+      // onSaved: (value) {
+      //   fullNameEditingController.text = value!;
+      // },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
           // prefixIcon: const Icon(Icons.mail),
@@ -105,23 +195,23 @@ class _EditProfilePageState extends State<EditProfilePage> {
     );
 
 //Email Address Field
-    final emailAddressField = TextFormField(
+    final emailAddressField = TextField(
       autofocus: false,
       controller: emailEditingController,
       keyboardType: TextInputType.emailAddress,
-      validator: (value) {
-        if (value!.isEmpty) {
-          return ("Please Enter Your Email");
-        }
-        // reg expression for email validation
-        if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]").hasMatch(value)) {
-          return ("Please Enter a valid email");
-        }
-        return null;
-      },
-      onSaved: (value) {
-        fullNameEditingController.text = value!;
-      },
+      // validator: (value) {
+      //   if (value!.isEmpty) {
+      //     return ("Please Enter Your Email");
+      //   }
+      //   // reg expression for email validation
+      //   if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]").hasMatch(value)) {
+      //     return ("Please Enter a valid email");
+      //   }
+      //   return null;
+      // },
+      // onSaved: (value) {
+      //   fullNameEditingController.text = value!;
+      // },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
           // prefixIcon: const Icon(Icons.mail),
@@ -148,7 +238,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     );
 
 //User Name Field
-    final userNameField = TextFormField(
+    final userNameField = TextField(
       autofocus: false,
       controller: userNameEditingController,
       keyboardType: TextInputType.name,
@@ -156,9 +246,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
       //  },
 
-      onSaved: (value) {
-        fullNameEditingController.text = value!;
-      },
+      // onSaved: (value) {
+      //   fullNameEditingController.text = value!;
+      // },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
           // prefixIcon: const Icon(Icons.mail),
@@ -185,24 +275,24 @@ class _EditProfilePageState extends State<EditProfilePage> {
     );
 
     //password field
-    final passwordField = TextFormField(
+    final passwordField = TextField(
       autofocus: false,
       controller: passwordEditingController,
       //allows you to hide password
       obscureText: true,
-      validator: (value) {
-        RegExp regex = new RegExp(r'^.{6,}$');
-        if (value!.isEmpty) {
-          return ("Password is required for login");
-        }
-        if (!regex.hasMatch(value)) {
-          return ("Enter Valid Password(Min. 6 Character)");
-        }
-      },
+      // validator: (value) {
+      //   RegExp regex = new RegExp(r'^.{6,}$');
+      //   if (value!.isEmpty) {
+      //     return ("Password is required for login");
+      //   }
+      //   if (!regex.hasMatch(value)) {
+      //     return ("Enter Valid Password(Min. 6 Character)");
+      //   }
+      // },
 
-      onSaved: (value) {
-        fullNameEditingController.text = value!;
-      },
+      // onSaved: (value) {
+      //   fullNameEditingController.text = value!;
+      // },
       textInputAction: TextInputAction.done,
       decoration: InputDecoration(
           // prefixIcon: const Icon(Icons.vpn_key),
@@ -229,7 +319,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     );
 
     //phoneNumber field
-    final phoneNumberField = TextFormField(
+    final phoneNumberField = TextField(
       autofocus: false,
       controller: phoneNumberEditingController,
       keyboardType: TextInputType.phone,
@@ -237,9 +327,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
       //  },
 
-      onSaved: (value) {
-        fullNameEditingController.text = value!;
-      },
+      // onSaved: (value) {
+      //   fullNameEditingController.text = value!;
+      // },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
           // prefixIcon: const Icon(Icons.mail),
@@ -392,72 +482,4 @@ Widget genderPicker(BuildContext context) {
       )
     ],
   );
-}
-
-void signUp(String email, String password, context) async {
-  if (_formKey.currentState!.validate()) {
-    try {
-      await _auth
-          .createUserWithEmailAndPassword(email: email, password: password)
-          .then((value) => {postDetailsToFirestore(context)})
-          .catchError((e) {
-        Fluttertoast.showToast(msg: e!.message);
-      });
-    } on FirebaseAuthException catch (error) {
-      switch (error.code) {
-        case "invalid-email":
-          errorMessage = "Your email address appears to be malformed.";
-          break;
-        case "wrong-password":
-          errorMessage = "Your password is wrong.";
-          break;
-        case "user-not-found":
-          errorMessage = "User with this email doesn't exist.";
-          break;
-        case "user-disabled":
-          errorMessage = "User with this email has been disabled.";
-          break;
-        case "too-many-requests":
-          errorMessage = "Too many requests";
-          break;
-        case "operation-not-allowed":
-          errorMessage = "Signing in with Email and Password is not enabled.";
-          break;
-        default:
-          errorMessage = "An undefined Error happened.";
-      }
-      Fluttertoast.showToast(msg: errorMessage!);
-      print(error.code);
-    }
-  }
-}
-
-postDetailsToFirestore(context) async {
-  // calling our firestore
-  // calling our user model
-  // sedning these values
-  final userProvider = Provider.of<UserModel>(context, listen: false);
-
-  FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-  User? user = _auth.currentUser;
-
-  UserModel userModel = UserModel();
-
-  // writing all the values
-  userModel.email = user!.email;
-  userModel.uid = user.uid;
-  userModel.fullName = fullNameEditingController.text;
-  userModel.userName = userNameEditingController.text;
-  userModel.phoneNumber = phoneNumberEditingController.text;
-
-  await firebaseFirestore
-      .collection("users")
-      .doc(user.uid)
-      .update(userModel.toMap());
-  Fluttertoast.showToast(msg: "Account Updated Successfully:) ");
-
-  userProvider.getUserData();
-
-  Navigator.pushAndRemoveUntil((context),
-      MaterialPageRoute(builder: (context) => ProfilePage()), (route) => false);
 }
