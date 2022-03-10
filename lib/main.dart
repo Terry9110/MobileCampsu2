@@ -1,6 +1,7 @@
 import 'package:campus2/EventsDetail/model/event_list_model.dart';
 import 'package:campus2/HistoryPage/history_page.dart';
 import 'package:campus2/LoginScreen/login_page.dart';
+import 'package:campus2/ProfilePage/edit_email.dart';
 
 import 'package:campus2/ProfilePage/profile_page.dart';
 
