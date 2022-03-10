@@ -53,9 +53,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
   // final userProvider;
   @override
   void initState() {
-    userName?.text = widget.userName;
-   fullName?.text = widget.fullName;
-    phoneNumber?.text = widget.phoneNumber;
+    super.initState();
+    print("this is widget.username");
+
+    print(widget.userName);
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      userName?.text = widget.userName;
+      fullName?.text = widget.fullName;
+      phoneNumber?.text = widget.phoneNumber;
+    });
+
     //  final userProvider = Provider.of<UserModel>(context);
 
     // userProvider.getUserData();
@@ -74,7 +81,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
     // }
 
     // emailEditingController = TextEditingController();
-    super.initState();
   }
 
   @override
@@ -102,49 +108,50 @@ class _EditProfilePageState extends State<EditProfilePage> {
     final userProvider = Provider.of<UserModel>(context);
 
     //Full Name Field
-    final fullNameField = TextField(
-      // autofocus: false,
-      // key: Key(userProvider.fullName ?? " "),
-      controller: fullName,
-      keyboardType: TextInputType.name,
+    final fullNameField = TextField(key: Key(fullName.toString()));
+    // autofocus: false,
+    // key: Key(userProvider.fullName ?? " "),
+    controller:
+    fullName;
+    keyboardType:
+    TextInputType.name;
 
-      // validator: (value) {
-      //   RegExp regex = new RegExp(r'^.{3,}$');
-      //   if (value!.isEmpty) {
-      //     return ("First Name cannot be Empty");
-      //   }
-      //   if (!regex.hasMatch(value)) {
-      //     return ("Enter Valid name(Min. 3 Character)");
-      //   }
-      //   return null;
-      // },
-      // onSaved: (value) {
-      //   fullNameEditingController.text = value!;
-      // },
-      // textInputAction: TextInputAction.next,
-      decoration: InputDecoration(
-          // prefixIcon: const Icon(Icons.mail),
-          // contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "Full Name",
-          hintStyle: GoogleFonts.poppins(color: Colors.grey[400]),
-          contentPadding:
-              const EdgeInsets.only(left: 20, top: 15, bottom: 15, right: 5),
-          label: Text(
-            'Full Name',
-            style: GoogleFonts.poppins(color: Colors.grey[500], fontSize: 12),
-          ),
-          border: OutlineInputBorder(
+    // validator: (value) {
+    //   RegExp regex = new RegExp(r'^.{3,}$');
+    //   if (value!.isEmpty) {
+    //     return ("First Name cannot be Empty");
+    //   }
+    //   if (!regex.hasMatch(value)) {
+    //     return ("Enter Valid name(Min. 3 Character)");
+    //   }
+    //   return null;
+    // },
+    // onSaved: (value) {
+    //   fullNameEditingController.text = value!;
+    // },
+    // textInputAction: TextInputAction.next,
+    decoration:
+    InputDecoration(
+        // prefixIcon: const Icon(Icons.mail),
+        // contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+        hintText: "Full Name",
+        hintStyle: GoogleFonts.poppins(color: Colors.grey[400]),
+        contentPadding:
+            const EdgeInsets.only(left: 20, top: 15, bottom: 15, right: 5),
+        label: Text(
+          'Full Name',
+          style: GoogleFonts.poppins(color: Colors.grey[500], fontSize: 12),
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(width: 1, color: Colors.grey),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
-            borderSide: const BorderSide(width: 1, color: Colors.grey),
-          ),
-          focusedErrorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(15),
-              borderSide: const BorderSide(width: 1, color: Color(0xFFe63900))),
-          focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(15),
-              borderSide:
-                  const BorderSide(width: 1, color: Color(0xFFe63900)))),
-    );
+            borderSide: const BorderSide(width: 1, color: Color(0xFFe63900))),
+        focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15),
+            borderSide: const BorderSide(width: 1, color: Color(0xFFe63900))));
 
 //Email Address Field
     final emailAddressField = TextField(
@@ -462,7 +469,7 @@ postDetailsToFirestore(context, fullName, userName, phoneNumber) async {
       .update(userModel.toMap());
   Fluttertoast.showToast(msg: "Account Updated Successfully:) ");
 
-  userProvider.getUserData();
+  await userProvider.getUserData();
 
   Navigator.pushAndRemoveUntil((context),
       MaterialPageRoute(builder: (context) => ProfilePage()), (route) => false);

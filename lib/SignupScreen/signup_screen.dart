@@ -442,3 +442,5 @@ postDetailsToFirestore(context) async {
       MaterialPageRoute(builder: (context) => SignupSuccess()),
       (route) => false);
 }
+
+

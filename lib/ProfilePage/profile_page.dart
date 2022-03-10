@@ -13,8 +13,11 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserModel>(context);
+    // userProvider.getUserData();
 
     User? user = FirebaseAuth.instance.currentUser;
+
+    print('this is user');
     print(user);
 
     // final userProvider = Provider.of<UserModel>(context);
@@ -40,14 +43,15 @@ class ProfilePage extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.edit),
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) =>  EditProfilePage(
-                    userName:userProvider.userName.toString(),
-                    fullName:userProvider.fullName.toString(),
-                    phoneNumber:userProvider.phoneNumber.toString()
-                    
-
-                  )));
+              print('this is userProvider.username');
+              print(userProvider.userName);
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => EditProfilePage(
+                          userName: userProvider.userName.toString(),
+                          fullName: userProvider.fullName.toString(),
+                          phoneNumber: userProvider.phoneNumber.toString())));
             },
           )
         ],

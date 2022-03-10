@@ -1,5 +1,6 @@
 import 'package:campus2/EventsDetail/events_details_widget.dart';
 import 'package:campus2/ProfilePage/profile_page.dart';
+import 'package:campus2/SignupScreen/model/user_model.dart';
 import 'package:campus2/theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,8 @@ class _EventsList extends State<EventsList> {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       final provider = Provider.of<EventListModel>(context, listen: false);
       provider.getEventsList();
+      final userProvider = Provider.of<UserModel>(context, listen: false);
+       userProvider.getUserData();
 
       // print('This is provider.event list ');
       // print(provider.eventsList);

@@ -1,3 +1,4 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -32,20 +33,38 @@ class UserModel extends ChangeNotifier {
   }
 
   getUser() async {
-    FirebaseAuth auth = FirebaseAuth.instance;
+    FirebaseAuth auth = await FirebaseAuth.instance;
 
-    String uid = auth.currentUser!.uid.toString();
-    // print('this is UID!!!');
-    // print(uid);
+    String uid = await auth.currentUser!.uid.toString();
+    (uid);
+    print(uid);
     var response = await _db
-        .collection('users')
-        .where('uid', isEqualTo: uid)
-        // .limit(1)
-        .get();
-    // .limit(1)
+    .collection('users')
+    .doc(uid)
+    .get()
+    .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        var res = documentSnapshot.data() as Map;
+        print(res['firstName']);
+        // if(res != null){
+         
+           uid = res['uid'] ?? "";
+          print(uid);
+          email = res['email']  ?? "";
+          fullName = res['fullName'] ?? "";
+          userName = res['userName'] ?? "";
+          phoneNumber = res['phoneNumber'] ?? "";
+          imagePath = res['imagePath'] ?? "";
+          notifyListeners();
+        // }
+        
+        print('Document data: ${documentSnapshot.data()}');
+      } else {
+        print('Document does not exist on the database');
+      }
+    });
     // .get();
-    // .snapshots();
-    // if (response.)
+    // response.snapshots());
     print('this is response');
     // print(response.take(1));
     return response;
@@ -54,24 +73,44 @@ class UserModel extends ChangeNotifier {
   getUserData() async {
     var authenticatedUser = FirebaseAuth.instance;
 
-    getUser().then((querySnapshot) {
-      print('THIS IS QUERY SNAPSHOT');
-      print(querySnapshot);
-      querySnapshot.docs.forEach((result) {
-        print('THIS IS RESULT.DATA');
-        print(result.data());
-        print('this is res');
-        var res = result.data();
-        print(res['uid']);
-        uid = res['uid'];
-        email = res['email'];
-        fullName = res['fullName'];
-        userName = res['userName'];
-        phoneNumber = res['phoneNumber'];
-        imagePath = res['imagePath'];
-        notifyListeners();
-      });
-    });
+  // 
+  var snapshot = await this.getUser();
+  // print(snapshot);
+  print('snapshot');
+    // print(snapshot.data.data);
+    //  print("snapshot");
+    //  Map<String, dynamic> data = snapshot as Map<String, dynamic>;
+    //   print(data);
+    //   print("snapshot");
+    //  .then((DocumentSnapshot ds) {  
+
+    //    print(ds);
+    //  });
+   
+    // for (var doc in snap.docs) {
+    //     uid =  doc.get('uid');
+    //     email = doc.get('email');
+    //     fullName =  doc.get('fullName');
+    //     userName =  doc.get('userName');
+    //     phoneNumber =  doc.get('phoneNumber');
+    //     imagePath =  doc.get('imagePath');
+    //     notifyListeners();
+
+    // }
+    // //     print('THIS IS RESULT.DATA');
+    //     print(result.data());
+    //     print('this is res');
+    //     var res = result.data();
+    //     print(res['uid']);
+    //     uid = res['uid'];
+    //     email = res['email'];
+    //     fullName = res['fullName'];
+    //     userName = res['userName'];
+    //     phoneNumber = res['phoneNumber'];
+    //     imagePath = res['imagePath'];
+    //     notifyListeners();
+    //   });
+  // };
 
     // print('this is res');
     // print(res['uid']);
