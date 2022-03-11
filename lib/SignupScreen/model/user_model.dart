@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -34,38 +33,38 @@ class UserModel extends ChangeNotifier {
 
   getUser() async {
     FirebaseAuth auth = await FirebaseAuth.instance;
-
+    User? user = auth.currentUser;
     String uid = await auth.currentUser!.uid.toString();
     (uid);
-    print(uid);
+    // print(uid);
     var response = await _db
-    .collection('users')
-    .doc(uid)
-    .get()
-    .then((DocumentSnapshot documentSnapshot) {
+        .collection('users')
+        .doc(uid)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
         var res = documentSnapshot.data() as Map;
-        print(res['firstName']);
+        // print(res['firstName']);
         // if(res != null){
-         
-           uid = res['uid'] ?? "";
-          print(uid);
-          email = res['email']  ?? "";
-          fullName = res['fullName'] ?? "";
-          userName = res['userName'] ?? "";
-          phoneNumber = res['phoneNumber'] ?? "";
-          imagePath = res['imagePath'] ?? "";
-          notifyListeners();
+
+        uid = res['uid'] ?? "";
+        // print(uid);
+        email = user?.email;
+        fullName = res['fullName'] ?? "";
+        userName = res['userName'] ?? "";
+        phoneNumber = res['phoneNumber'] ?? "";
+        imagePath = res['imagePath'] ?? "";
+        notifyListeners();
         // }
-        
-        print('Document data: ${documentSnapshot.data()}');
+
+        // print('Document data: ${documentSnapshot.data()}');
       } else {
-        print('Document does not exist on the database');
+        // print('Document does not exist on the database');
       }
     });
     // .get();
     // response.snapshots());
-    print('this is response');
+    // print('this is response');
     // print(response.take(1));
     return response;
   }
@@ -73,20 +72,20 @@ class UserModel extends ChangeNotifier {
   getUserData() async {
     var authenticatedUser = FirebaseAuth.instance;
 
-  // 
-  var snapshot = await this.getUser();
-  // print(snapshot);
-  print('snapshot');
+    //
+    var snapshot = await this.getUser();
+    // print(snapshot);
+    // print('snapshot');
     // print(snapshot.data.data);
     //  print("snapshot");
     //  Map<String, dynamic> data = snapshot as Map<String, dynamic>;
     //   print(data);
     //   print("snapshot");
-    //  .then((DocumentSnapshot ds) {  
+    //  .then((DocumentSnapshot ds) {
 
     //    print(ds);
     //  });
-   
+
     // for (var doc in snap.docs) {
     //     uid =  doc.get('uid');
     //     email = doc.get('email');
@@ -110,7 +109,7 @@ class UserModel extends ChangeNotifier {
     //     imagePath = res['imagePath'];
     //     notifyListeners();
     //   });
-  // };
+    // };
 
     // print('this is res');
     // print(res['uid']);

@@ -1,3 +1,4 @@
+import 'package:campus2/EventsList/events_list.dart';
 import 'package:campus2/ProfilePage/edit_profile_page.dart';
 import 'package:campus2/SignupScreen/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,8 +15,8 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserModel>(context);
     User? user = FirebaseAuth.instance.currentUser;
-    print(userProvider.fullName);
-    print("userProvider");
+    // print(userProvider.fullName);
+    // print("userProvider");
 
     // final userProvider = Provider.of<UserModel>(context);
     //   final fullname = userProvider.fullName;
@@ -33,7 +34,8 @@ class ProfilePage extends StatelessWidget {
             color: Colors.white,
           ),
           onPressed: () {
-            Navigator.of(context).pop();
+             Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const EventsList()));
           },
         ),
         actions: [
@@ -65,7 +67,7 @@ class ProfilePage extends StatelessWidget {
             child: InkWell(
               onTap: () {
                 Navigator.of(context).pop();
-                print('This is print');
+                // print('This is print');
               },
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,

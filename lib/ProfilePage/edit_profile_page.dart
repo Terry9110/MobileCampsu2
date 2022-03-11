@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:campus2/ProfilePage/profile_page.dart';
 import 'package:campus2/SignupScreen/model/signupModel.dart';
 import 'package:campus2/SignupScreen/model/user_model.dart';
@@ -47,28 +49,41 @@ TextEditingController phoneNumberEditingController =
     new TextEditingController();
 
 class _EditProfilePageState extends State<EditProfilePage> {
-  String? userName;
-  String? fullName;
-  String? phoneNumber;
+  // String? userName;
+  // String? fullName;
+  // String? phoneNumber;
+  TextEditingController fullName = TextEditingController();
+  TextEditingController userName = TextEditingController();
+  TextEditingController phoneNumber = TextEditingController();
+  TextEditingController email = TextEditingController();
   // final userProvider;
   @override
   void initState() {
     super.initState();
+
+    //  TextEditingController fullNameCrl = TextEditingController();
+
     // print("this is widget.username");
 
     // print(widget.userName);
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       final userProvider = Provider.of<UserModel>(context, listen: false);
+      userProvider.getUserData();
+      Timer(Duration(milliseconds: 2000), () {
+        setState(() {
+          userName.text = userProvider.userName.toString();
+          ;
 
-    userProvider.getUserData();
-      setState(() {
-        userName =  userProvider.userName;
-         fullName =  userProvider.fullName;
-          phoneNumber =  userProvider.phoneNumber;
+          fullName.text = userProvider.fullName.toString();
+          // print("============================");
+          // print(fullName);
+          phoneNumber.text = userProvider.phoneNumber.toString();
+          email.text = userProvider.email.toString();
+        });
       });
+
       // TextEditingController userName = TextEditingController(text:userProvider.userName);
       // // widget.userName;
-      //  TextEditingController fullName = TextEditingController(text:userProvider.fullName);
       //   TextEditingController phoneNumber = TextEditingController(text:widget.phoneNumber);
     });
 
@@ -105,59 +120,59 @@ class _EditProfilePageState extends State<EditProfilePage> {
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserModel>(context);
 
-        userName =  userProvider.userName;
-         fullName =  userProvider.fullName;
-          phoneNumber =  userProvider.phoneNumber;
-    
     //Full Name Field
     final fullNameField = TextFormField(
-      // key: Key(fullName.toString()))
-    // autofocus: false,
-    // key: Key(userProvider.fullName ?? " "),
-    key: Key("First Name"),
-    
-    initialValue: fullName,
-    onChanged: (ValueKey){
-      print(ValueKey);
-      setState(() {
-        fullName:ValueKey;
-      });
-    },
-    onSaved: (val){
-       setState(() {
-        fullName:val;
-      });
-    },
-    // controller:fullName,
-    keyboardType:TextInputType.name,
-    textInputAction: TextInputAction.next,
-    decoration:
-    InputDecoration(
-        // prefixIcon: const Icon(Icons.mail),
-        // contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: "Full Name",
-        hintStyle: GoogleFonts.poppins(color: Colors.grey[400]),
-        contentPadding:
-            const EdgeInsets.only(left: 20, top: 15, bottom: 15, right: 5),
-        label: Text(
-          'Full Name',
-          style: GoogleFonts.poppins(color: Colors.grey[500], fontSize: 12),
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
-          borderSide: const BorderSide(width: 1, color: Colors.grey),
-        ),
-        focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-            borderSide: const BorderSide(width: 1, color: Color(0xFFe63900))),
-        focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-            borderSide: const BorderSide(width: 1, color: Color(0xFFe63900)))));
+        // key: Key(fullName.toString()))
+        // autofocus: false,
+        key: Key("any name"),
+
+        // initialValue: fullName,
+        controller: fullName,
+        onChanged: (ValueKey) {
+          // print(ValueKey);
+          setState(() {
+            fullName:
+            ValueKey;
+          });
+        },
+        onSaved: (val) {
+          setState(() {
+            fullName:
+            val;
+          });
+        },
+        // controller:fullName,
+        keyboardType: TextInputType.name,
+        textInputAction: TextInputAction.next,
+        decoration: InputDecoration(
+            // prefixIcon: const Icon(Icons.mail),
+            // contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+            hintText: "Full Name",
+            hintStyle: GoogleFonts.poppins(color: Colors.grey[400]),
+            contentPadding:
+                const EdgeInsets.only(left: 20, top: 15, bottom: 15, right: 5),
+            label: Text(
+              'Full Name',
+              style: GoogleFonts.poppins(color: Colors.grey[500], fontSize: 12),
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: const BorderSide(width: 1, color: Colors.grey),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15),
+                borderSide:
+                    const BorderSide(width: 1, color: Color(0xFFe63900))),
+            focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15),
+                borderSide:
+                    const BorderSide(width: 1, color: Color(0xFFe63900)))));
 
 //Email Address Field
     final emailAddressField = TextFormField(
+      key: Key('Email'),
       autofocus: false,
-      controller: emailEditingController,
+      controller: email,
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
           // prefixIcon: const Icon(Icons.mail),
@@ -185,18 +200,21 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
 //User Name Field
     final userNameField = TextFormField(
-      key: Key(userProvider.userName ?? " "),
-      initialValue: userProvider.userName,
-      onChanged: (ValueKey){
-      setState(() {
-        userName:ValueKey;
-      });
-    },
-      onSaved: (val){
-       setState(() {
-        userName:val;
-      });
-    },
+      key: Key("UserName"),
+      // initialValue: userProvider.userName,
+      controller: userName,
+      onChanged: (ValueKey) {
+        setState(() {
+          userName:
+          ValueKey;
+        });
+      },
+      onSaved: (val) {
+        setState(() {
+          userName:
+          val;
+        });
+      },
       autofocus: false,
       // controller: userName,
       keyboardType: TextInputType.name,
@@ -231,19 +249,21 @@ class _EditProfilePageState extends State<EditProfilePage> {
     //phoneNumber field
     final phoneNumberField = TextFormField(
       key: Key(userProvider.phoneNumber ?? " "),
-    
-      initialValue: userProvider.phoneNumber,
+      controller: phoneNumber,
+      // initialValue: userProvider.phoneNumber,
 
-        onChanged: (ValueKey){
-      setState(() {
-        phoneNumber:ValueKey;
-      });
-    },
-     onSaved: (val){
-       setState(() {
-        phoneNumber:val;
-      });
-    },
+      onChanged: (ValueKey) {
+        setState(() {
+          phoneNumber:
+          ValueKey;
+        });
+      },
+      onSaved: (val) {
+        setState(() {
+          phoneNumber:
+          val;
+        });
+      },
       autofocus: false,
       // controller: phoneNumber,
       keyboardType: TextInputType.phone,
@@ -312,7 +332,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
         height: 50,
         minWidth: MediaQuery.of(context).size.width,
         onPressed: () {
-          postDetailsToFirestore(context, fullName, userName, phoneNumber);
+          // print(fullName);
+          postDetailsToFirestore(
+              context, fullName, userName, phoneNumber, email);
         },
         child: Text('Update Profile',
             style: GoogleFonts.poppins(
@@ -331,7 +353,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
               color: Color(0xFF006633),
             ),
             onPressed: () {
-              Navigator.of(context).pop();
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const ProfilePage()));
             },
           )),
       body: Center(
@@ -359,7 +382,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     const SizedBox(height: 20),
                     userNameField,
                     const SizedBox(height: 20),
-                    // editEmailField,
+                    emailAddressField,
                     const SizedBox(height: 20),
                     // passwordField,
                     // const SizedBox(height: 20),
@@ -418,7 +441,7 @@ Widget genderPicker(BuildContext context) {
           if (gender == null) {
             return;
           }
-          print(gender.name);
+          // print(gender.name);
           provider.setValues("gender", gender.name.toLowerCase());
         },
         equallyAligned: true,
@@ -471,13 +494,13 @@ Widget genderPicker(BuildContext context) {
 //   }
 // }
 
-postDetailsToFirestore(context, fullName, userName, phoneNumber) async {
+postDetailsToFirestore(context, fullName, userName, phoneNumber, email) async {
   // calling our firestore
   // calling our user model
   // sedning these values
-  print(fullName);
-  print("fullName");
-  return;
+  // print(fullName.text);
+  // print("fullName");
+
   final userProvider = Provider.of<UserModel>(context, listen: false);
 
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
@@ -488,9 +511,27 @@ postDetailsToFirestore(context, fullName, userName, phoneNumber) async {
   // writing all the values
   // userModel.email = user!.email;
   // userModel.uid = user.uid;
-  userModel.fullName = fullName;
-  userModel.userName = userName;
-  userModel.phoneNumber = phoneNumber;
+  userModel.fullName = fullName.text;
+  userModel.userName = userName.text;
+  userModel.phoneNumber = phoneNumber.text;
+  userModel.email = email.text;
+
+  // User? firebaseUser = await _auth.currentUser;
+  // await firebaseUser?.updateEmail(email.text);
+  await FirebaseAuth.instance.currentUser!.updateEmail(email.text);
+  // .then(
+  //   (value) =>{
+  //     // message = 'Success';
+  //     // postDetailsToFirestore(context);
+  //     },
+  // )
+  //   .catchError((onError) => {
+  //     message = 'error';
+  //       Fluttertoast.showToast(msg: message!);
+  // print(onError);
+  //     }
+
+  // );
 
   await firebaseFirestore
       .collection("users")
