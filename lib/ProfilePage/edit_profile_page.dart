@@ -47,23 +47,32 @@ TextEditingController phoneNumberEditingController =
     new TextEditingController();
 
 class _EditProfilePageState extends State<EditProfilePage> {
-  TextEditingController? userName;
-  TextEditingController? fullName;
-  TextEditingController? phoneNumber;
+  String? userName;
+  String? fullName;
+  String? phoneNumber;
   // final userProvider;
   @override
   void initState() {
     super.initState();
-    print("this is widget.username");
+    // print("this is widget.username");
 
-    print(widget.userName);
+    // print(widget.userName);
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-      userName?.text = widget.userName;
-      fullName?.text = widget.fullName;
-      phoneNumber?.text = widget.phoneNumber;
+      final userProvider = Provider.of<UserModel>(context, listen: false);
+
+    userProvider.getUserData();
+      setState(() {
+        userName =  userProvider.userName;
+         fullName =  userProvider.fullName;
+          phoneNumber =  userProvider.phoneNumber;
+      });
+      // TextEditingController userName = TextEditingController(text:userProvider.userName);
+      // // widget.userName;
+      //  TextEditingController fullName = TextEditingController(text:userProvider.fullName);
+      //   TextEditingController phoneNumber = TextEditingController(text:widget.phoneNumber);
     });
 
-    //  final userProvider = Provider.of<UserModel>(context);
+    //  final userProvider = Provider.ofR<UserModel>(context);
 
     // userProvider.getUserData();
     // if (userProvider.fullName != null) {
@@ -84,17 +93,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
   }
 
   @override
-  void didChangeDependencies() {
-    // final userProvider = Provider.of<UserModel>(context);
-    // userProvider.getUserData();
-    // fullNameEditingController.value =
-    //     TextEditingValue(text: userProvider.fullName ?? " ");
-    // emailEditingController.text = userProvider.email ?? " ";
-    // userNameEditingController.text = userProvider.userName ?? " ";
-    // phoneNumberEditingController.text = userProvider.phoneNumber ?? " ";
-  }
-
-  @override
   void dispose() {
     //  fullNameEditingController.dispose();
     //  userNameEditingController.dispose();
@@ -107,29 +105,32 @@ class _EditProfilePageState extends State<EditProfilePage> {
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserModel>(context);
 
+        userName =  userProvider.userName;
+         fullName =  userProvider.fullName;
+          phoneNumber =  userProvider.phoneNumber;
+    
     //Full Name Field
-    final fullNameField = TextField(key: Key(fullName.toString()));
+    final fullNameField = TextFormField(
+      // key: Key(fullName.toString()))
     // autofocus: false,
     // key: Key(userProvider.fullName ?? " "),
-    controller:
-    fullName;
-    keyboardType:
-    TextInputType.name;
-
-    // validator: (value) {
-    //   RegExp regex = new RegExp(r'^.{3,}$');
-    //   if (value!.isEmpty) {
-    //     return ("First Name cannot be Empty");
-    //   }
-    //   if (!regex.hasMatch(value)) {
-    //     return ("Enter Valid name(Min. 3 Character)");
-    //   }
-    //   return null;
-    // },
-    // onSaved: (value) {
-    //   fullNameEditingController.text = value!;
-    // },
-    // textInputAction: TextInputAction.next,
+    key: Key("First Name"),
+    
+    initialValue: fullName,
+    onChanged: (ValueKey){
+      print(ValueKey);
+      setState(() {
+        fullName:ValueKey;
+      });
+    },
+    onSaved: (val){
+       setState(() {
+        fullName:val;
+      });
+    },
+    // controller:fullName,
+    keyboardType:TextInputType.name,
+    textInputAction: TextInputAction.next,
     decoration:
     InputDecoration(
         // prefixIcon: const Icon(Icons.mail),
@@ -151,10 +152,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
             borderSide: const BorderSide(width: 1, color: Color(0xFFe63900))),
         focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
-            borderSide: const BorderSide(width: 1, color: Color(0xFFe63900))));
+            borderSide: const BorderSide(width: 1, color: Color(0xFFe63900)))));
 
 //Email Address Field
-    final emailAddressField = TextField(
+    final emailAddressField = TextFormField(
       autofocus: false,
       controller: emailEditingController,
       keyboardType: TextInputType.emailAddress,
@@ -183,10 +184,21 @@ class _EditProfilePageState extends State<EditProfilePage> {
     );
 
 //User Name Field
-    final userNameField = TextField(
-      // key: Key(userProvider.userName ?? " "),
+    final userNameField = TextFormField(
+      key: Key(userProvider.userName ?? " "),
+      initialValue: userProvider.userName,
+      onChanged: (ValueKey){
+      setState(() {
+        userName:ValueKey;
+      });
+    },
+      onSaved: (val){
+       setState(() {
+        userName:val;
+      });
+    },
       autofocus: false,
-      controller: userName,
+      // controller: userName,
       keyboardType: TextInputType.name,
       //  validator: (value) {
 
@@ -218,8 +230,22 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
     //phoneNumber field
     final phoneNumberField = TextFormField(
+      key: Key(userProvider.phoneNumber ?? " "),
+    
+      initialValue: userProvider.phoneNumber,
+
+        onChanged: (ValueKey){
+      setState(() {
+        phoneNumber:ValueKey;
+      });
+    },
+     onSaved: (val){
+       setState(() {
+        phoneNumber:val;
+      });
+    },
       autofocus: false,
-      controller: phoneNumber,
+      // controller: phoneNumber,
       keyboardType: TextInputType.phone,
       //  validator: (value) {
 
@@ -449,6 +475,9 @@ postDetailsToFirestore(context, fullName, userName, phoneNumber) async {
   // calling our firestore
   // calling our user model
   // sedning these values
+  print(fullName);
+  print("fullName");
+  return;
   final userProvider = Provider.of<UserModel>(context, listen: false);
 
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
