@@ -1,15 +1,20 @@
 // import 'package:campsu/theme.dart';
+import 'dart:async';
+
+import 'package:campus2/EventsDetail/model/event_list_model.dart';
 import 'package:campus2/checkoutPage/checkout_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'dart:convert';
 
 import '../theme.dart';
 
 class EventsPage extends StatefulWidget {
-  const EventsPage(
+  EventsPage(
       {Key? key,
       required this.imageUrl,
       required this.eventName,
@@ -19,7 +24,9 @@ class EventsPage extends StatefulWidget {
       required this.totalInterested,
       required this.totalViews,
       required this.organizerName,
-      required this.ticketPrice})
+      required this.ticketPrice,
+      required this.totalTickets,
+      required this.dbReference})
       : super(key: key);
   final String imageUrl;
   final String eventName;
@@ -30,6 +37,8 @@ class EventsPage extends StatefulWidget {
   final int totalViews;
   final String organizerName;
   final int ticketPrice;
+  int totalTickets;
+  final String dbReference;
   @override
   State<EventsPage> createState() => _EventsPage();
 }
@@ -352,7 +361,7 @@ class _EventsPage extends State<EventsPage> {
                           children: [
                             Padding(
                                 padding: const EdgeInsets.only(top: 5),
-                                child: Text(widget.totalViews.toString(),
+                                child: Text(widget.totalTickets.toString(),
                                     style: GoogleFonts.poppins(
                                         color: Colors.black,
                                         fontSize: 12,
@@ -425,8 +434,23 @@ class _EventsPage extends State<EventsPage> {
       setState(() {
         paymentIntentData = null;
       });
+      CollectionReference eventTicket =
+          FirebaseFirestore.instance.collection('Events');
+
+      await eventTicket
+          .doc(widget.dbReference)
+          .update({'total_tickets': widget.totalTickets - 1});
+
       ScaffoldMessenger.of(context)
           .showSnackBar(const SnackBar(content: Text('Paid Successfully')));
+      final provider = Provider.of<EventListModel>(context, listen: false);
+
+      Timer(Duration(milliseconds: 2000), () {
+        provider.getEventsList();
+      });
+      setState(() {
+        widget.totalTickets = widget.totalTickets - 1;
+      });
     } catch (e) {
       print(e);
     }

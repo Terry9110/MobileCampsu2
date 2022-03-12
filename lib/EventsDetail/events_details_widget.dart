@@ -4,18 +4,20 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 class EventDetails extends StatefulWidget {
-  const EventDetails(
-      {Key? key,
-      required this.imageUrl,
-      required this.eventName,
-      required this.subtitle,
-      required this.date,
-      required this.place,
-      required this.totalInterested,
-      required this.organizerName,
-      required this.totalViews,
-      required this.ticketPrice})
-      : super(key: key);
+  const EventDetails({
+    Key? key,
+    required this.imageUrl,
+    required this.eventName,
+    required this.subtitle,
+    required this.date,
+    required this.place,
+    required this.totalInterested,
+    required this.organizerName,
+    required this.totalViews,
+    required this.ticketPrice,
+    required this.totalTickets,
+    required this.dbReference,
+  }) : super(key: key);
   final String imageUrl;
   final String eventName;
   final String subtitle;
@@ -25,6 +27,8 @@ class EventDetails extends StatefulWidget {
   final int totalViews;
   final String organizerName;
   final int ticketPrice;
+  final int totalTickets;
+  final String dbReference;
   @override
   State<EventDetails> createState() => _EventDetails();
 }
@@ -47,6 +51,8 @@ class _EventDetails extends State<EventDetails> {
                         totalViews: widget.totalViews,
                         organizerName: widget.organizerName,
                         ticketPrice: widget.ticketPrice,
+                        totalTickets: widget.totalTickets,
+                        dbReference: widget.dbReference,
                       )));
         },
         child: Container(
