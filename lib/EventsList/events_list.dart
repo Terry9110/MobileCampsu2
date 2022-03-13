@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:campus2/EventsDetail/model/event_list_model.dart';
+import 'package:search_page/search_page.dart';
+
 
 class EventsList extends StatefulWidget {
   const EventsList({Key? key}) : super(key: key);
@@ -254,7 +256,10 @@ class _EventsList extends State<EventsList> {
                     suffixIcon: Icon(
                       Icons.search,
                       color: Colors.grey[500],
-                    ))),
+                    )),
+                    // onTap:() => showSearch(context: context, delegate: SearchPage<EventListModel>(builder: builder, filter: filter, items: ev)) ,
+                    
+                    ),
           )
         ],
       ),
